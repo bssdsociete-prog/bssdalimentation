@@ -935,7 +935,12 @@ const E = {
   catActive:'all',
   adminOk:  false,
 };
-const PWD_ADMIN = 'bssdalimentation2025';
+const PWD_ADMIN_HASH = '25de087d6315fdb7a716a589ef3985a35a0ca02ebcf105d20afc71f8d8b745ce'; // empreinte SHA-256 — le mot de passe en clair n'apparaît pas dans le code
+async function sha256Hex(texte){
+  const data=new TextEncoder().encode(texte);
+  const buf=await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
 const LS_PANIER = 'fp_panier';
 
 /* ─────────────────────────────────────────────
@@ -1341,10 +1346,11 @@ function fermerAdmin(){
   document.body.style.overflow='';
 }
 
-function connexionAdmin(){
+async function connexionAdmin(){
   const mdp=document.getElementById('mdpAdmin').value;
   const err=document.getElementById('authErr');
-  if(mdp===PWD_ADMIN){ E.adminOk=true; err.classList.remove('visible'); afficherDash(); }
+  const hashSaisi=await sha256Hex(mdp);
+  if(hashSaisi===PWD_ADMIN_HASH){ E.adminOk=true; err.classList.remove('visible'); afficherDash(); }
   else{ err.classList.add('visible'); document.getElementById('mdpAdmin').value=''; }
 }
 
