@@ -5,8 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="BSSD ALIMENTATION — Épicerie en ligne à Cotonou et Calavi. Packs à 10 000, 20 000, 25 000 FCFA + tous vos produits alimentaires à l'unité. Riz, sardines, tomates en boîte, huile en bidon." />
   <title>BSSD ALIMENTATION — Boutique Alimentaire</title>
+
+  <!-- Open Graph / réseaux sociaux (WhatsApp, Facebook…) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BSSD Alimentation" />
+  <meta property="og:title" content="BSSD Alimentation — Épicerie en ligne à Cotonou & Calavi" />
+  <meta property="og:description" content="Packs à 10 000, 20 000, 25 000 FCFA + produits alimentaires à l'unité. Riz, sardines, tomates en boîte, huile en bidon. Paiement Mobile Money, livraison à Cotonou et Calavi." />
+  <meta property="og:image" content="https://bssd-alimentation.vercel.app/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="fr_FR" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BSSD Alimentation — Épicerie en ligne à Cotonou & Calavi" />
+  <meta name="twitter:description" content="Packs à 10 000, 20 000, 25 000 FCFA + produits alimentaires à l'unité, livrés à Cotonou et Calavi." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.gstatic.com" />
+  <link rel="preconnect" href="https://firestore.googleapis.com" />
+  <link rel="dns-prefetch" href="https://cdn.fedapay.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%231C4532%22/%3E%0A%3Cpath%20d%3D%22M32%2010c9%200%2016%204%2016%2013%200%2012-8%2020-16%2024-8-4-16-12-16-24%200-9%207-13%2016-13z%22%20fill%3D%22%2352A37A%22/%3E%0A%3Cpath%20d%3D%22M32%2016v22M24%2022c3%203%205%206%205%2010M40%2022c-3%203-5%206-5%2010%22%20stroke%3D%22%23FAF6EE%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22/%3E%0A%3Ccircle%20cx%3D%2232%22%20cy%3D%2250%22%20r%3D%223.5%22%20fill%3D%22%23C8951A%22/%3E%0A%3C/svg%3E" />
 
@@ -390,6 +407,12 @@ ul{list-style:none}
 .scroll-top.visible{opacity:1;pointer-events:all}
 .scroll-top:hover{background:var(--vert);transform:translateY(-3px)}
 
+/* ── Bouton WhatsApp flottant ── */
+.btn-whatsapp{position:fixed;bottom:28px;left:28px;width:56px;height:56px;background:#25D366;color:var(--blanc);border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;font-size:1.7rem;box-shadow:0 6px 20px rgba(37,211,102,.45);transition:all var(--tr);z-index:1500;animation:pulseWA 2.4s ease-in-out infinite}
+.btn-whatsapp:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 8px 24px rgba(37,211,102,.55)}
+@keyframes pulseWA{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.45)}50%{box-shadow:0 6px 20px rgba(37,211,102,.75),0 0 0 8px rgba(37,211,102,.12)}}
+@media(max-width:480px){.btn-whatsapp{width:50px;height:50px;font-size:1.5rem;bottom:20px;left:20px}.scroll-top{bottom:20px;right:20px}}
+
 /* ── Déclencheur admin secret : @ invisible dans le footer ── */
 #adminTrigger{
   color:rgba(255,255,255,0.25);  /* très discret — visible si on cherche, invisible sinon */
@@ -590,8 +613,8 @@ ul{list-style:none}
         <h2 class="sec-titre">Une question ?<br/>On vous répond.</h2>
         <div class="contact-details">
           <p>📍 Cotonou &amp; Calavi, Bénin</p>
-          <p>📞 +229 XX XX XX XX</p>
-          <p>📧 contact@bssd-alimentation.bj</p>
+          <p>📞 <a href="tel:+22901941708" style="color:inherit">+229 01 94 17 08 36</a></p>
+          <p>📧 <a href="mailto:bssdsociete@gmail.com" style="color:inherit">bssdsociete@gmail.com</a></p>
           <p>🕐 Lun–Sam : 8h–19h</p>
           <p>🚚 Livraison : Cotonou &amp; Calavi</p>
         </div>
@@ -619,6 +642,8 @@ ul{list-style:none}
       <div class="footer-brand">
         <div class="logo"><div class="logo-mark">🌿</div><span class="logo-nom">BSSD <em>Alimentation</em></span></div>
         <p>Riz, huiles, conserves et sardines,<br/>livrés à Cotonou &amp; Calavi.</p>
+        <p style="margin-top:10px"><a href="tel:+22901941708" style="color:inherit">📞 +229 01 94 17 08 36</a></p>
+        <p><a href="mailto:bssdsociete@gmail.com" style="color:inherit">📧 bssdsociete@gmail.com</a></p>
       </div>
       <div class="footer-col">
         <h4>Navigation</h4>
@@ -629,9 +654,9 @@ ul{list-style:none}
       </div>
       <div class="footer-col">
         <h4>Légal</h4>
-        <a href="#">Mentions légales</a>
-        <a href="#">CGV</a>
-        <a href="#">Confidentialité</a>
+        <a href="javascript:void(0)" onclick="ouvrirLegal('mentions')">Mentions légales</a>
+        <a href="javascript:void(0)" onclick="ouvrirLegal('cgv')">CGV</a>
+        <a href="javascript:void(0)" onclick="ouvrirLegal('confidentialite')">Confidentialité</a>
       </div>
     </div>
     <p class="footer-copy">© <span id="annee"></span> BSSD Alimentation — Tous droits réservés.<span id="adminTrigger" aria-hidden="true" title="">@</span></p>
@@ -824,17 +849,32 @@ ul{list-style:none}
   </div>
 </div>
 
-<!-- Toast + Scroll top -->
+<!-- ══════════════════════════════════════
+     MODAL LÉGAL (Mentions légales / CGV / Confidentialité)
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="overlayLegal" onclick="fermerLegal()"></div>
+<div class="modal" id="modalLegal" role="dialog" aria-modal="true">
+  <div class="modal-entete">
+    <h2 id="legalTitre">Mentions légales</h2>
+    <button class="btn-fermer-modal" onclick="fermerLegal()" aria-label="Fermer">✕</button>
+  </div>
+  <div id="legalContenu" style="padding:24px 28px 36px;color:var(--texte-doux);font-size:.9rem;line-height:1.75"></div>
+</div>
+
+<!-- Toast + Scroll top + WhatsApp -->
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Remonter">▲</button>
+<a class="btn-whatsapp" href="https://wa.me/22901941708?text=Bonjour%20BSSD%20Alimentation%2C%20je%20souhaite%20avoir%20des%20informations%20sur%20vos%20packs." target="_blank" rel="noopener" aria-label="Nous contacter sur WhatsApp">💬</a>
 
 <!-- ══════════════════════════════════════
      JAVASCRIPT
 ══════════════════════════════════════ -->
-<!-- Firebase SDK (compat, simple à utiliser en script inline) -->
+<!-- Firebase SDK (compat, simple à utiliser en script inline) — seuls app + firestore
+     sont chargés immédiatement : ce sont les seuls nécessaires pour afficher le
+     catalogue. Auth (admin) et FedaPay (paiement) sont chargés à la demande plus
+     bas, pour que la boutique s'affiche le plus vite possible pour 100% des visiteurs. -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
 /* ─────────────────────────────────────────────
    0. FIREBASE — catalogue produits partagé en temps réel
@@ -850,6 +890,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const PRODUITS_COL = 'produits';
+/* Cache local (IndexedDB) : au 2e passage, le catalogue s'affiche instantanément
+   depuis le cache pendant que Firestore vérifie les mises à jour en arrière-plan. */
+db.enablePersistence({synchronizeTabs:true}).catch(err=>{
+  console.warn('Persistence Firestore non activée :', err.code);
+});
 /* Compte administrateur Firebase Authentication (email/mot de passe).
    À créer dans la console Firebase (voir instructions fournies) : c'est ce compte,
    et lui seul, que les règles de sécurité Firestore autoriseront à écrire
@@ -857,11 +902,29 @@ const PRODUITS_COL = 'produits';
    sans authentification nécessaire — aucune connexion automatique n'a lieu au
    chargement de la page. */
 const ADMIN_EMAIL = 'admin@bssd-alimentation.bj';
-</script>
-<!-- FedaPay Checkout.js — paiement Mobile Money / carte bancaire -->
-<script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
-<script>
+
+/* ── Chargement à la demande (lazy-load) ──
+   Auth n'est requis que si on ouvre le panneau admin ; FedaPay ne l'est que si
+   on arrive à la page de paiement. On évite ainsi de les télécharger pour rien
+   à chaque visite, ce qui accélère nettement le premier affichage du catalogue. */
+const SCRIPTS_CHARGES = {};
+function chargerScript(url){
+  if(SCRIPTS_CHARGES[url]) return SCRIPTS_CHARGES[url];
+  SCRIPTS_CHARGES[url]=new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src=url; s.onload=()=>resolve(); s.onerror=()=>reject(new Error('Échec de chargement : '+url));
+    document.head.appendChild(s);
+  });
+  return SCRIPTS_CHARGES[url];
+}
+function chargerFirebaseAuth(){ return chargerScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js'); }
 const FEDAPAY_PUBLIC_KEY = 'pk_live_hefMW_4YGGGutPtDu8GJViGv';
+function chargerFedaPay(){ return chargerScript('https://cdn.fedapay.com/checkout.js?v=1.1.7'); }
+/* On précharge FedaPay dès que le navigateur est inactif (après l'affichage du
+   catalogue), pour qu'il soit déjà prêt quand le client arrive au paiement —
+   sans jamais retarder l'affichage initial de la boutique. */
+if('requestIdleCallback' in window){ requestIdleCallback(()=>chargerFedaPay().catch(()=>{})); }
+else{ setTimeout(()=>chargerFedaPay().catch(()=>{}), 3000); }
 </script>
 <script>
 /* ══════════════════════════════════════════════════════════════
@@ -1211,8 +1274,12 @@ async function lancerPaiement(){
   const emailClient=email || `client${phone.replace(/[^0-9]/g,'')}@bssd-alimentation.bj`;
 
   // Vérif : le script FedaPay (checkout.js) s'est-il bien chargé ?
-  // Si le CDN est bloqué (bloqueur de pub, réseau, etc.) FedaPay sera undefined
-  // et sans ce test le bouton resterait bloqué en "chargement" indéfiniment.
+  // Il est normalement déjà préchargé en arrière-plan (voir chargerFedaPay), mais
+  // si ce n'est pas encore le cas (réseau lent), on tente de le charger ici avant
+  // d'abandonner — pour ne bloquer le client que si le CDN est vraiment inaccessible.
+  if(typeof FedaPay === 'undefined'){
+    try{ await chargerFedaPay(); }catch(e){}
+  }
   if(typeof FedaPay === 'undefined'){
     errMsg.textContent="Le module de paiement n'a pas pu se charger (connexion internet, bloqueur de publicités, ou domaine non autorisé chez FedaPay). Réessayez ou contactez-nous.";
     errBloc.classList.add('visible');
@@ -1383,6 +1450,7 @@ async function connexionAdmin(){
   if(!mdp){ err.textContent='Entrez le mot de passe.'; err.classList.add('visible'); return; }
   if(btn){ btn.disabled=true; btn.textContent='Connexion…'; }
   try{
+    await chargerFirebaseAuth();
     await firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL, mdp);
     E.adminOk=true; err.classList.remove('visible'); afficherDash();
   }catch(e){
@@ -1591,6 +1659,48 @@ function rendreTablAdmin(filtre=''){
 /* ─────────────────────────────────────────────
    10. UI
 ───────────────────────────────────────────── */
+/* Contenu légal — textes génériques à adapter/compléter avec vos
+   informations réelles (RCCM, IFU, adresse exacte du siège, etc.) */
+const LEGAL_CONTENU = {
+  mentions:{
+    titre:'Mentions légales',
+    html:`<p><strong>Éditeur du site</strong><br/>BSSD Alimentation — épicerie en ligne basée à Cotonou, Bénin.</p>
+      <p style="margin-top:12px"><strong>Contact</strong><br/>Téléphone : +229 01 94 17 08 36<br/>Email : bssdsociete@gmail.com</p>
+      <p style="margin-top:12px"><strong>Activité</strong><br/>Vente en ligne de produits alimentaires (packs et produits à l'unité) avec livraison à Cotonou et Calavi.</p>
+      <p style="margin-top:12px"><strong>Hébergement</strong><br/>Site hébergé par Vercel Inc. Données du catalogue et des commandes hébergées par Google Firebase.</p>
+      <p style="margin-top:12px;font-size:.8rem;color:var(--texte-doux)">Informations légales complètes (numéro RCCM, IFU) à ajouter dès leur disponibilité.</p>`
+  },
+  cgv:{
+    titre:'Conditions Générales de Vente',
+    html:`<p><strong>1. Produits</strong><br/>Les packs et produits proposés sont décrits aussi fidèlement que possible. Les photos et emojis illustratifs peuvent différer légèrement du produit livré.</p>
+      <p style="margin-top:12px"><strong>2. Prix</strong><br/>Les prix sont indiqués en Francs CFA (FCFA), toutes taxes comprises. Les frais de livraison sont précisés avant la validation de la commande.</p>
+      <p style="margin-top:12px"><strong>3. Commande & paiement</strong><br/>Le paiement s'effectue en ligne par Mobile Money (MTN, Moov, Celtiis) ou carte bancaire via la plateforme sécurisée FedaPay. La commande est confirmée après validation du paiement.</p>
+      <p style="margin-top:12px"><strong>4. Livraison</strong><br/>Livraison sous 24 à 48h à Cotonou et Calavi. Le retrait sur place est possible sans frais de livraison.</p>
+      <p style="margin-top:12px"><strong>5. Réclamations</strong><br/>Pour toute question ou réclamation sur une commande, contactez-nous par téléphone ou WhatsApp au +229 01 94 17 08 36, ou par email à bssdsociete@gmail.com.</p>`
+  },
+  confidentialite:{
+    titre:'Politique de confidentialité',
+    html:`<p><strong>Données collectées</strong><br/>Nom, téléphone, email, adresse de livraison — uniquement pour traiter vos commandes et vous contacter si besoin.</p>
+      <p style="margin-top:12px"><strong>Utilisation</strong><br/>Ces informations servent uniquement à la gestion des commandes et du service client. Elles ne sont ni vendues ni partagées avec des tiers à des fins commerciales.</p>
+      <p style="margin-top:12px"><strong>Paiement</strong><br/>Les paiements sont traités directement par FedaPay ; BSSD Alimentation ne stocke aucune donnée bancaire.</p>
+      <p style="margin-top:12px"><strong>Conservation</strong><br/>Les données de commande sont conservées le temps nécessaire au traitement et au suivi client.</p>
+      <p style="margin-top:12px"><strong>Vos droits</strong><br/>Vous pouvez demander la consultation ou la suppression de vos données en nous contactant à bssdsociete@gmail.com.</p>`
+  }
+};
+function ouvrirLegal(type){
+  const d=LEGAL_CONTENU[type]; if(!d)return;
+  document.getElementById('legalTitre').textContent=d.titre;
+  document.getElementById('legalContenu').innerHTML=d.html;
+  document.getElementById('overlayLegal').classList.add('ouvert');
+  document.getElementById('modalLegal').classList.add('ouvert');
+  document.body.style.overflow='hidden';
+}
+function fermerLegal(){
+  document.getElementById('overlayLegal').classList.remove('ouvert');
+  document.getElementById('modalLegal').classList.remove('ouvert');
+  document.body.style.overflow='';
+}
+
 function toggleMenu(){
   const h=document.getElementById('hamburger');
   const m=document.getElementById('menuMobile');
@@ -1634,7 +1744,7 @@ document.getElementById('formContact').addEventListener('submit', async (e)=>{
 });
 
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){ fermerPanier(); fermerAdmin(); fermerCommande(); }
+  if(e.key==='Escape'){ fermerPanier(); fermerAdmin(); fermerCommande(); fermerLegal(); }
 });
 
 // Spinners pour le bouton payer
