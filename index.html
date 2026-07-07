@@ -699,6 +699,7 @@ ul{list-style:none}
     <div class="onglets">
       <button class="onglet actif" data-tab="tabAjout">➕ Ajouter un pack</button>
       <button class="onglet" data-tab="tabGerer">📋 Gérer les packs</button>
+      <button class="onglet" data-tab="tabPaiement">🔑 Paiement</button>
     </div>
 
     <!-- TAB Ajout / Édition -->
@@ -764,6 +765,32 @@ ul{list-style:none}
         </table>
       </div>
       <p class="etat-vide" id="adminVide" style="display:none">Aucun pack enregistré.</p>
+    </div>
+
+    <!-- TAB Paiement (configuration FedaPay) -->
+    <div class="tab-contenu" id="tabPaiement">
+      <p style="color:var(--texte-doux);font-size:.85rem;margin-bottom:18px">
+        Récupérez vos clés API sur <a href="https://app.fedapay.com" target="_blank" rel="noopener" style="color:var(--vert-clair);text-decoration:underline">app.fedapay.com</a> → Paramètres → Clés API.
+      </p>
+      <div class="admin-form">
+        <div class="fg">
+          <label>Environnement</label>
+          <select id="cfgEnv">
+            <option value="live">Live (production)</option>
+            <option value="sandbox">Sandbox (test)</option>
+          </select>
+          <small>Sandbox permet de tester des paiements sans argent réel. Passez sur Live quand vous êtes prêt à encaisser de vrais clients.</small>
+        </div>
+        <div class="fg">
+          <label>Clé publique FedaPay <span class="req">*</span></label>
+          <input type="text" id="cfgCle" placeholder="pk_live_… ou pk_sandbox_…" autocomplete="off" />
+          <small>Cette clé est publique (visible dans le code du site) — normal et sans risque, elle ne permet pas d'effectuer de retraits.</small>
+        </div>
+        <div id="cfgMsg" style="font-size:.85rem;font-weight:700;display:none"></div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-vert" id="btnCfgSave" onclick="sauvegarderConfigFedaPay()">💾 Enregistrer</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -918,7 +945,48 @@ function chargerScript(url){
   return SCRIPTS_CHARGES[url];
 }
 function chargerFirebaseAuth(){ return chargerScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js'); }
-const FEDAPAY_PUBLIC_KEY = 'pk_live_hefMW_4YGGGutPtDu8GJViGv';
+/* Config FedaPay par défaut (utilisée tant qu'aucune config n'a été enregistrée
+   depuis l'onglet admin "🔑 Paiement"). Modifiable ensuite sans toucher au code. */
+const CONFIG_COL = 'config';
+const FEDAPAY_DOC = 'fedapay';
+let FEDAPAY_CONFIG = { environment:'live', publicKey:'' };
+function chargerConfigFedaPay(){
+  db.collection(CONFIG_COL).doc(FEDAPAY_DOC).onSnapshot(snap=>{
+    if(snap.exists){
+      const d=snap.data();
+      if(d.publicKey) FEDAPAY_CONFIG={ environment:d.environment||'live', publicKey:d.publicKey };
+    }
+    // Si le formulaire admin est ouvert, on garde les champs synchronisés
+    const ce=document.getElementById('cfgEnv'), cc=document.getElementById('cfgCle');
+    if(ce && cc && document.activeElement!==cc){ ce.value=FEDAPAY_CONFIG.environment; cc.value=FEDAPAY_CONFIG.publicKey; }
+  }, err=>console.error('Erreur lecture config FedaPay :',err));
+}
+async function sauvegarderConfigFedaPay(){
+  const env=document.getElementById('cfgEnv').value;
+  const cle=document.getElementById('cfgCle').value.trim();
+  const msg=document.getElementById('cfgMsg');
+  const btn=document.getElementById('btnCfgSave');
+  msg.style.display='none';
+  if(!cle||!(cle.startsWith('pk_live_')||cle.startsWith('pk_sandbox_'))){
+    msg.textContent='⚠️ Entrez une clé publique valide (elle commence par pk_live_ ou pk_sandbox_).';
+    msg.style.color='#c0392b'; msg.style.display='block';
+    return;
+  }
+  btn.disabled=true; btn.textContent='Enregistrement…';
+  try{
+    await db.collection(CONFIG_COL).doc(FEDAPAY_DOC).set({ environment:env, publicKey:cle }, { merge:true });
+    FEDAPAY_CONFIG={ environment:env, publicKey:cle };
+    msg.textContent='✅ Configuration enregistrée — elle est utilisée immédiatement par le site.';
+    msg.style.color='var(--vert)'; msg.style.display='block';
+    toast('✅ Clé FedaPay enregistrée');
+  }catch(err){
+    console.error('Erreur enregistrement config FedaPay :',err);
+    msg.textContent="⚠️ Échec de l'enregistrement — vérifiez votre connexion et réessayez.";
+    msg.style.color='#c0392b'; msg.style.display='block';
+  }finally{
+    btn.disabled=false; btn.textContent='💾 Enregistrer';
+  }
+}
 function chargerFedaPay(){ return chargerScript('https://cdn.fedapay.com/checkout.js?v=1.1.7'); }
 /* On précharge FedaPay dès que le navigateur est inactif (après l'affichage du
    catalogue), pour qu'il soit déjà prêt quand le client arrive au paiement —
@@ -1269,6 +1337,13 @@ async function lancerPaiement(){
   if(!adresse&&livrSelected()!=='retrait'){ toast('⚠️ Entrez votre adresse'); return; }
   if(!E.panier.length){ toast('⚠️ Votre panier est vide'); return; }
 
+  // Vérif : une clé FedaPay a-t-elle été configurée (onglet admin "🔑 Paiement") ?
+  if(!FEDAPAY_CONFIG.publicKey){
+    errMsg.textContent="Le paiement en ligne n'est pas encore configuré. Contactez l'administrateur du site.";
+    errBloc.classList.add('visible');
+    return;
+  }
+
   const montant=Math.round(sousTotal()+fraisLivr());
   // FedaPay exige un email client — on en génère un si le client n'en a pas fourni
   const emailClient=email || `client${phone.replace(/[^0-9]/g,'')}@bssd-alimentation.bj`;
@@ -1303,7 +1378,8 @@ async function lancerPaiement(){
 
   try{
     const widget=FedaPay.init({
-      public_key: FEDAPAY_PUBLIC_KEY,
+      public_key: FEDAPAY_CONFIG.publicKey,
+      environment: FEDAPAY_CONFIG.environment,
       transaction:{
         amount: montant,
         description: `Commande BSSD Alimentation — ${E.panier.reduce((s,i)=>s+i.qte,0)} article(s)`
@@ -1467,6 +1543,8 @@ function afficherDash(){
   document.getElementById('adminAuth').style.display='none';
   document.getElementById('adminDash').classList.add('visible');
   rendreTablAdmin();
+  document.getElementById('cfgEnv').value=FEDAPAY_CONFIG.environment;
+  document.getElementById('cfgCle').value=FEDAPAY_CONFIG.publicKey;
 }
 
 // Onglets admin
@@ -1757,6 +1835,7 @@ document.head.appendChild(style);
 ───────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded',()=>{
   chargerProduits(); // Charge + écoute le catalogue en temps réel depuis Firestore (voir section 3)
+  chargerConfigFedaPay(); // Charge la clé FedaPay configurée depuis l'admin (avec repli sur la clé par défaut)
   chargerPanier();
   majBadge();
   rendrePanier();
