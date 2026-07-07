@@ -1283,7 +1283,10 @@ async function lancerPaiement(){
 async function enregistrerCommande({transaction,prenom,nom,phone,email,adresse,ville,notes,montant}){
   try{
     const articlesLeger=E.panier.map(({id,nom,promo,qte,emoji})=>({id,nom,promo,qte,emoji}));
-    await db.collection('commandes').add({
+    // On utilise l'ID de transaction FedaPay comme ID de document Firestore.
+    // Ainsi, si le webhook serveur (/api/fedapay-webhook.js) écrit aussi sur cette
+    // commande, il complète le même document au lieu d'en créer un doublon.
+    await db.collection('commandes').doc(String(transaction.id)).set({
       transactionId: transaction.id,
       statut: transaction.status,
       client:{ prenom, nom, phone, email },
@@ -1291,8 +1294,9 @@ async function enregistrerCommande({transaction,prenom,nom,phone,email,adresse,v
       paiement: pmtSelected(),
       articles: articlesLeger,
       montant,
+      confirmeParWebhook: false,
       dateCreation: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    }, { merge: true });
   }catch(err){
     console.error('Erreur enregistrement commande Firestore :',err);
     // Le paiement a déjà réussi — on ne bloque pas le client pour cette erreur secondaire
