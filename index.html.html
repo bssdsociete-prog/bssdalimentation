@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BSSD ALIMENTATION — Épicerie en ligne à Cotonou et Calavi. Packs à 10 000, 20 000, 25 000 FCFA + tous vos produits alimentaires à l'unité. Riz, sardines, tomates en boîte, huile en bidon." />
+  <title>BSSD ALIMENTATION — Boutique Alimentaire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%231C4532%22/%3E%0A%3Cpath%20d%3D%22M32%2010c9%200%2016%204%2016%2013%200%2012-8%2020-16%2024-8-4-16-12-16-24%200-9%207-13%2016-13z%22%20fill%3D%22%2352A37A%22/%3E%0A%3Cpath%20d%3D%22M32%2016v22M24%2022c3%203%205%206%205%2010M40%2022c-3%203-5%206-5%2010%22%20stroke%3D%22%23FAF6EE%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22/%3E%0A%3Ccircle%20cx%3D%2232%22%20cy%3D%2250%22%20r%3D%223.5%22%20fill%3D%22%23C8951A%22/%3E%0A%3C/svg%3E" />
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   BSSD ALIMENTATION — CSS COMPLET
+   Design : Vert forêt profond · Ivoire chaud · Or miel
+   Typo   : DM Serif Display (titres) · Plus Jakarta Sans (corps)
+   Signature : Cards avec un ruban de remise en diagonale
+═══════════════════════════════════════════════════════════ */
+
+/* ── Variables ── */
+:root {
+  --vert:        #1C4532;
+  --vert-vif:    #276749;
+  --vert-clair:  #52A37A;
+  --vert-pale:   #D1EAD9;
+  --ivoire:      #FAF6EE;
+  --blanc:       #FFFFFF;
+  --or:          #C8951A;
+  --or-pale:     #FDF3DC;
+  --orange:      #E8531A;
+  --texte:       #18202C;
+  --texte-doux:  #5C6878;
+  --bordure:     #E2EAE0;
+  --ombre:       rgba(28,69,50,0.10);
+  --font-titre:  'DM Serif Display', Georgia, serif;
+  --font-corps:  'Plus Jakarta Sans', system-ui, sans-serif;
+  --r-sm: 8px; --r-md: 14px; --r-lg: 22px; --r-xl: 30px; --r-full: 9999px;
+  --tr: .22s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-corps);background:var(--ivoire);color:var(--texte);line-height:1.6;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font-corps);cursor:pointer;border:none;background:none}
+input,textarea,select{font-family:var(--font-corps);font-size:1rem}
+ul{list-style:none}
+:focus-visible{outline:3px solid var(--or);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ── Utilitaires ── */
+.container{width:100%;max-width:1180px;margin:0 auto;padding:0 18px}
+.section{padding:72px 0}
+.sec-eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--vert-clair);margin-bottom:10px}
+.sec-titre{font-family:var(--font-titre);font-size:clamp(1.9rem,4vw,2.9rem);color:var(--vert);line-height:1.15;margin-bottom:14px}
+.sec-sub{font-size:1.05rem;color:var(--texte-doux);max-width:520px;margin:0 auto}
+.sec-header{text-align:center;margin-bottom:48px}
+
+/* ── Boutons ── */
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.95rem;padding:13px 26px;border-radius:var(--r-full);border:2px solid transparent;cursor:pointer;transition:background var(--tr),color var(--tr),transform var(--tr),border-color var(--tr)}
+.btn:hover{transform:translateY(-2px)}
+.btn-vert{background:var(--vert);color:var(--blanc);border-color:var(--vert)}
+.btn-vert:hover{background:var(--vert-vif);border-color:var(--vert-vif)}
+.btn-outline{background:transparent;color:var(--vert);border-color:var(--vert)}
+.btn-outline:hover{background:var(--vert);color:var(--blanc)}
+.btn-or{background:var(--or);color:var(--blanc);border-color:var(--or)}
+.btn-or:hover{background:#a87716;border-color:#a87716}
+
+/* ── Formulaires ── */
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg label{font-weight:600;font-size:.85rem;color:var(--vert)}
+.fg input,.fg textarea,.fg select{padding:10px 13px;border:1.5px solid var(--bordure);border-radius:var(--r-md);background:var(--blanc);color:var(--texte);transition:border-color var(--tr)}
+.fg input:focus,.fg textarea:focus{border-color:var(--vert-clair);outline:none}
+.fg small{color:var(--texte-doux);font-size:.76rem}
+.req{color:var(--orange)}
+.form-row{display:grid;grid-template-columns:1fr;gap:14px}
+
+/* ══════════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════════ */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(250,246,238,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--bordure);transition:box-shadow var(--tr)}
+.navbar.ombre{box-shadow:0 4px 24px var(--ombre)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:0 18px;height:66px}
+.logo{display:flex;align-items:center;gap:9px}
+.logo-mark{width:36px;height:36px;background:var(--vert);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.logo-nom{font-family:var(--font-titre);font-size:1.35rem;color:var(--vert)}
+.logo-nom em{color:var(--vert-clair);font-style:italic}
+.nav-liens{display:none;align-items:center;gap:28px}
+.nav-lien{font-weight:600;font-size:.88rem;color:var(--texte-doux);transition:color var(--tr);position:relative}
+.nav-lien::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:var(--vert-clair);transition:width var(--tr)}
+.nav-lien:hover{color:var(--vert)}
+.nav-lien:hover::after{width:100%}
+/* accès admin : long press sur le @ du footer */
+.nav-droite{display:flex;align-items:center;gap:12px}
+.btn-panier{position:relative;width:42px;height:42px;background:var(--vert);color:var(--blanc);border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;font-size:1.15rem;transition:background var(--tr),transform var(--tr)}
+.btn-panier:hover{background:var(--vert-vif);transform:scale(1.08)}
+.badge{position:absolute;top:-5px;right:-5px;background:var(--orange);color:var(--blanc);font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--ivoire)}
+.hamburger{display:flex;flex-direction:column;justify-content:space-between;width:24px;height:16px}
+.hamburger span{display:block;height:2px;background:var(--vert);border-radius:2px;transition:all var(--tr)}
+.hamburger.ouvert span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.ouvert span:nth-child(2){opacity:0}
+.hamburger.ouvert span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.menu-mobile{display:none;flex-direction:column;position:fixed;top:66px;left:0;right:0;background:var(--blanc);border-bottom:1px solid var(--bordure);padding:20px 18px;gap:14px;z-index:999;animation:slideDown .25s ease}
+.menu-mobile.ouvert{display:flex}
+@keyframes slideDown{from{transform:translateY(-8px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* ══════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════ */
+.hero{min-height:100vh;display:flex;align-items:center;padding:calc(66px + 48px) 0 64px;background:linear-gradient(145deg,var(--ivoire) 55%,var(--vert-pale) 100%);position:relative;overflow:hidden}
+.hero-inner{display:grid;grid-template-columns:1fr;gap:48px;align-items:center}
+.hero-content{max-width:600px}
+.hero-eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--vert-clair);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';display:inline-block;width:28px;height:2px;background:var(--vert-clair)}
+.hero-titre{font-family:var(--font-titre);font-size:clamp(2.4rem,5.5vw,4rem);color:var(--vert);line-height:1.08;margin-bottom:20px}
+.hero-titre em{color:var(--vert-clair);font-style:italic}
+.hero-desc{font-size:1.08rem;color:var(--texte-doux);margin-bottom:32px;max-width:460px;line-height:1.75}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.stat strong{display:block;font-family:var(--font-titre);font-size:2rem;color:var(--vert);line-height:1}
+.stat span{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--texte-doux);margin-top:3px;display:block}
+/* Visuel hero : mosaïque d'émojis animés */
+.hero-visuel{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:320px;margin:0 auto}
+.hero-emoji{width:88px;height:88px;background:var(--blanc);border:1px solid var(--bordure);border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;font-size:2.4rem;box-shadow:0 4px 16px var(--ombre);animation:flotteEmoji 4s ease-in-out infinite}
+.hero-emoji:nth-child(2n){animation-delay:.6s}
+.hero-emoji:nth-child(3n){animation-delay:1.2s}
+.hero-emoji:nth-child(4n){animation-delay:.3s}
+@keyframes flotteEmoji{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ══════════════════════════════════════════════
+   BANDEAU DÉFILANT
+══════════════════════════════════════════════ */
+.bandeau{background:var(--vert);color:var(--blanc);padding:11px 0;overflow:hidden;white-space:nowrap}
+.bandeau-piste{display:inline-block;animation:defileBandeau 26s linear infinite;font-size:.85rem;font-weight:600;letter-spacing:.04em}
+.bandeau-piste span{margin:0 32px}
+.bandeau-piste .sep{color:var(--vert-clair)}
+@keyframes defileBandeau{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ══════════════════════════════════════════════
+   FILTRES
+══════════════════════════════════════════════ */
+.boutique-section{background:var(--blanc)}
+.filtres{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:40px}
+.filtre-btn{padding:8px 20px;border-radius:var(--r-full);border:2px solid var(--bordure);background:var(--blanc);color:var(--texte-doux);font-size:.85rem;font-weight:700;cursor:pointer;transition:all var(--tr)}
+.filtre-btn:hover,.filtre-btn.actif{background:var(--vert);border-color:var(--vert);color:var(--blanc)}
+
+/* ══════════════════════════════════════════════
+   CARTE PRODUIT — SIGNATURE : ruban diagonal
+══════════════════════════════════════════════ */
+.grille{display:grid;grid-template-columns:1fr;gap:22px}
+.carte{background:var(--blanc);border:1px solid var(--bordure);border-radius:var(--r-xl);overflow:hidden;display:flex;flex-direction:column;transition:transform var(--tr),box-shadow var(--tr);position:relative;animation:carteIn .4s ease both}
+@keyframes carteIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.carte:hover{transform:translateY(-6px);box-shadow:0 18px 48px var(--ombre)}
+/* Image */
+.carte-img{position:relative;height:196px;overflow:hidden;background:var(--vert-pale)}
+.carte-img img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.carte:hover .carte-img img{transform:scale(1.07)}
+.carte-emoji-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem}
+/* ── Ruban diagonal de remise — SIGNATURE VISUELLE ── */
+.ruban{position:absolute;top:18px;right:-28px;background:var(--orange);color:var(--blanc);font-weight:800;font-size:.8rem;padding:5px 36px;transform:rotate(35deg);transform-origin:center;letter-spacing:.05em;box-shadow:0 2px 8px rgba(232,83,26,.35)}
+/* Corps carte */
+.carte-corps{padding:16px 20px 10px;display:flex;flex-direction:column;gap:8px;flex:1}
+.carte-cat{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--vert-clair)}
+.carte-nom{font-family:var(--font-titre);font-size:1.22rem;color:var(--vert);line-height:1.2}
+.carte-desc{font-size:.85rem;color:var(--texte-doux);line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.carte-prix{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:4px}
+.prix-promo{font-size:1.5rem;font-weight:800;color:var(--vert)}
+.prix-barre{font-size:.88rem;font-weight:500;color:var(--texte-doux);text-decoration:line-through;text-decoration-color:var(--orange);text-decoration-thickness:2px}
+/* Pied carte */
+.carte-pied{padding:0 20px 20px}
+.btn-ajout{width:100%;background:var(--vert);color:var(--blanc);font-weight:700;font-size:.9rem;padding:12px;border-radius:var(--r-full);border:2px solid var(--vert);display:flex;align-items:center;justify-content:center;gap:8px;transition:all var(--tr)}
+.btn-ajout:hover{background:var(--vert-vif);border-color:var(--vert-vif);box-shadow:0 6px 18px rgba(39,103,73,.3)}
+.btn-ajout.ajoute{background:var(--or);border-color:var(--or)}
+/* Etat vide */
+.etat-vide{text-align:center;padding:60px 20px;color:var(--texte-doux);font-style:italic}
+
+/* ══════════════════════════════════════════════
+   AVANTAGES
+══════════════════════════════════════════════ */
+.avantages-section{background:var(--vert-pale)}
+.avantages-grille{display:grid;grid-template-columns:1fr;gap:18px}
+.avantage{background:var(--blanc);border-radius:var(--r-lg);padding:32px 28px;text-align:center;border:1px solid var(--bordure);transition:transform var(--tr)}
+.avantage:hover{transform:translateY(-4px)}
+.avantage-icone{font-size:2.2rem;margin-bottom:14px}
+.avantage h3{font-family:var(--font-titre);font-size:1.15rem;color:var(--vert);margin-bottom:8px}
+.avantage p{font-size:.88rem;color:var(--texte-doux);line-height:1.65}
+
+/* ══════════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════════ */
+.contact-section{background:var(--blanc)}
+.contact-inner{display:grid;grid-template-columns:1fr;gap:48px}
+.contact-info .sec-titre{text-align:left}
+.contact-info .sec-eyebrow{text-align:left}
+.contact-details{display:flex;flex-direction:column;gap:10px;color:var(--texte-doux);font-size:.95rem;margin-top:4px}
+.contact-form-bloc{background:var(--ivoire);padding:32px;border-radius:var(--r-xl);border:1px solid var(--bordure);display:flex;flex-direction:column;gap:14px}
+
+/* ══════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════ */
+.footer{background:var(--vert);color:var(--blanc);padding:56px 0 24px}
+.footer-inner{display:grid;grid-template-columns:1fr;gap:36px;margin-bottom:36px}
+.footer-brand .logo-nom{color:var(--blanc)}
+.footer-brand p{margin-top:12px;font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.7}
+.footer-col h4{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--vert-pale);margin-bottom:12px}
+.footer-col a{display:block;font-size:.88rem;color:rgba(255,255,255,.6);margin-bottom:7px;transition:color var(--tr)}
+.footer-col a:hover{color:var(--blanc)}
+.footer-copy{text-align:center;font-size:.75rem;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.1);padding-top:24px}
+
+/* ══════════════════════════════════════════════
+   DRAWER PANIER
+══════════════════════════════════════════════ */
+.overlay{position:fixed;inset:0;background:rgba(28,69,50,.5);backdrop-filter:blur(5px);z-index:2000;opacity:0;pointer-events:none;transition:opacity var(--tr)}
+.overlay.ouvert{opacity:1;pointer-events:all}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100vw);background:var(--blanc);z-index:2001;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:-6px 0 40px rgba(0,0,0,.12)}
+.drawer.ouvert{transform:translateX(0)}
+.drawer-entete{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:var(--vert);color:var(--blanc)}
+.drawer-entete h2{font-family:var(--font-titre);font-size:1.25rem}
+.btn-fermer{font-size:1.3rem;color:rgba(255,255,255,.75);transition:color var(--tr)}
+.btn-fermer:hover{color:var(--blanc)}
+.drawer-articles{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:12px}
+.panier-vide{text-align:center;padding:56px 18px;color:var(--texte-doux)}
+.panier-vide span{font-size:3.5rem;display:block;margin-bottom:12px}
+/* Article panier */
+.art{display:flex;gap:14px;padding:12px;background:var(--ivoire);border-radius:var(--r-md);border:1px solid var(--bordure);animation:carteIn .25s ease both}
+.art-img{width:60px;height:60px;border-radius:var(--r-sm);background:var(--vert-pale);display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0;overflow:hidden}
+.art-img img{width:100%;height:100%;object-fit:cover}
+.art-info{flex:1;min-width:0}
+.art-nom{font-weight:700;font-size:.88rem;color:var(--vert);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.art-prix-unit{font-size:.8rem;color:var(--texte-doux);margin-top:2px}
+.art-qty{display:flex;align-items:center;gap:8px;margin-top:8px}
+.btn-qty{width:26px;height:26px;border-radius:var(--r-sm);border:1.5px solid var(--bordure);background:var(--blanc);font-size:.95rem;font-weight:800;color:var(--vert);display:flex;align-items:center;justify-content:center;transition:all var(--tr)}
+.btn-qty:hover{background:var(--vert);border-color:var(--vert);color:var(--blanc)}
+.qty-val{font-weight:800;font-size:.88rem;min-width:18px;text-align:center}
+.art-droite{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:8px}
+.art-total{font-weight:800;font-size:.88rem;color:var(--vert);white-space:nowrap}
+.btn-suppr{font-size:.85rem;color:var(--texte-doux);transition:color var(--tr)}
+.btn-suppr:hover{color:#c0392b}
+/* Pied drawer */
+.drawer-pied{padding:18px 24px;border-top:1px solid var(--bordure);background:var(--ivoire)}
+.totaux{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.t-ligne{display:flex;justify-content:space-between;font-size:.88rem;color:var(--texte-doux)}
+.t-ligne.total{font-size:1.1rem;font-weight:800;color:var(--vert);border-top:2px solid var(--bordure);padding-top:8px;margin-top:4px}
+.btn-cmd{width:100%;padding:14px;font-size:1rem;font-weight:800;background:var(--or);color:var(--blanc);border:none;border-radius:var(--r-full);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all var(--tr)}
+.btn-cmd:hover:not(:disabled){background:#a87716;transform:translateY(-1px)}
+.btn-cmd:disabled{background:var(--texte-doux);cursor:not-allowed}
+.btn-vider{width:100%;margin-top:8px;padding:9px;font-size:.82rem;font-weight:700;color:var(--texte-doux);background:transparent;border:none;cursor:pointer;transition:color var(--tr)}
+.btn-vider:hover{color:#c0392b}
+
+/* ══════════════════════════════════════════════
+   MODAL ADMIN
+══════════════════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(28,69,50,.55);backdrop-filter:blur(5px);z-index:3000;opacity:0;pointer-events:none;transition:opacity var(--tr)}
+.modal-overlay.ouvert{opacity:1;pointer-events:all}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);z-index:3001;background:var(--blanc);border-radius:var(--r-xl);width:min(680px,95vw);max-height:90vh;overflow-y:auto;box-shadow:0 24px 72px rgba(0,0,0,.18);opacity:0;pointer-events:none;transition:opacity var(--tr),transform var(--tr)}
+.modal.ouvert{opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1)}
+.modal-entete{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(--bordure);position:sticky;top:0;background:var(--blanc);z-index:1}
+.modal-entete h2{font-family:var(--font-titre);font-size:1.55rem;color:var(--vert)}
+.btn-fermer-modal{font-size:1.2rem;color:var(--texte-doux);transition:color var(--tr)}
+.btn-fermer-modal:hover{color:var(--texte)}
+
+/* Auth admin */
+.admin-auth{padding:40px 28px;display:flex;flex-direction:column;gap:16px;max-width:380px;margin:0 auto}
+.admin-auth p{color:var(--texte-doux);font-size:.9rem}
+.auth-err{color:#c0392b;font-size:.85rem;background:#fdecea;padding:8px 12px;border-radius:var(--r-sm);display:none}
+.auth-err.visible{display:block}
+
+/* Dashboard admin */
+.admin-dash{padding:20px 28px 32px;display:none}
+.admin-dash.visible{display:block}
+/* Onglets */
+.onglets{display:flex;gap:4px;margin-bottom:28px;border-bottom:2px solid var(--bordure)}
+.onglet{padding:9px 20px;font-weight:700;font-size:.85rem;color:var(--texte-doux);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;cursor:pointer;transition:all var(--tr);background:none;border-top:none;border-left:none;border-right:none}
+.onglet.actif{color:var(--vert);border-bottom-color:var(--vert-clair)}
+.tab-contenu{display:none}
+.tab-contenu.actif{display:block}
+/* Formulaire produit */
+.admin-form{display:flex;flex-direction:column;gap:14px}
+.apercu-remise{background:var(--or-pale);padding:10px 14px;border-radius:var(--r-sm);font-size:.88rem;color:var(--vert);display:none}
+.apercu-remise.visible{display:block}
+.apercu-remise strong{color:var(--orange)}
+.form-actions{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap}
+/* Table produits */
+.admin-recherche input{width:100%;padding:10px 13px;border:1.5px solid var(--bordure);border-radius:var(--r-md);background:var(--ivoire);font-size:.88rem;margin-bottom:14px}
+.admin-recherche input:focus{border-color:var(--vert-clair);outline:none}
+.tbl-wrapper{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:.85rem}
+.tbl th{background:var(--vert);color:var(--blanc);text-align:left;padding:11px 13px;font-weight:600;white-space:nowrap}
+.tbl td{padding:9px 13px;border-bottom:1px solid var(--bordure);vertical-align:middle}
+.tbl tr:hover td{background:var(--ivoire)}
+.tbl-thumb{width:44px;height:44px;border-radius:var(--r-sm);object-fit:cover;background:var(--vert-pale)}
+.tbl-thumb-ph{width:44px;height:44px;background:var(--vert-pale);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.badge-tbl{display:inline-block;background:var(--orange);color:var(--blanc);font-weight:800;font-size:.7rem;padding:2px 7px;border-radius:var(--r-full)}
+.btn-edit{background:var(--vert-pale);color:var(--vert);border:none;padding:4px 11px;border-radius:var(--r-full);font-size:.75rem;font-weight:700;cursor:pointer;transition:all var(--tr);margin-right:4px}
+.btn-edit:hover{background:var(--vert-vif);color:var(--blanc)}
+.btn-del{background:#fdecea;color:#c0392b;border:none;padding:4px 11px;border-radius:var(--r-full);font-size:.75rem;font-weight:700;cursor:pointer;transition:all var(--tr)}
+.btn-del:hover{background:#c0392b;color:var(--blanc)}
+
+/* ══════════════════════════════════════════════
+   PAGE COMMANDE (section inline)
+══════════════════════════════════════════════ */
+.page-commande{display:none;position:fixed;inset:0;z-index:4000;background:var(--ivoire);overflow-y:auto;padding-top:66px}
+.page-commande.visible{display:block}
+.cmd-entete{background:var(--vert);color:var(--blanc);padding:24px 0}
+.cmd-entete .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.cmd-entete h1{font-family:var(--font-titre);font-size:1.5rem}
+.cmd-entete button{font-size:.85rem;color:rgba(255,255,255,.75);background:none;border:none;cursor:pointer;text-decoration:underline;transition:color var(--tr)}
+.cmd-entete button:hover{color:var(--blanc)}
+/* Etapes */
+.etapes{display:flex;align-items:center;justify-content:center;gap:0;padding:16px 0;background:var(--blanc);border-bottom:1px solid var(--bordure)}
+.etape{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700;color:var(--texte-doux)}
+.etape.actif{color:var(--vert)}
+.etape.fait{color:var(--vert-clair)}
+.etape-num{width:26px;height:26px;border-radius:var(--r-full);background:var(--bordure);color:var(--texte-doux);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;flex-shrink:0}
+.etape.actif .etape-num{background:var(--vert);color:var(--blanc)}
+.etape.fait .etape-num{background:var(--vert-clair);color:var(--blanc)}
+.etape-sep{width:36px;height:2px;background:var(--bordure)}
+/* Corps commande */
+.cmd-grille{display:grid;grid-template-columns:1fr;gap:24px;padding:28px 0 64px}
+.cmd-card{background:var(--blanc);border:1px solid var(--bordure);border-radius:var(--r-xl);padding:26px}
+.cmd-card h2{font-family:var(--font-titre);font-size:1.2rem;color:var(--vert);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+/* Options livraison */
+.options-livr{display:flex;flex-direction:column;gap:12px}
+.opt-livr{display:flex;align-items:center;gap:14px;padding:13px 16px;border:2px solid var(--bordure);border-radius:var(--r-md);cursor:pointer;transition:all var(--tr)}
+.opt-livr:has(input:checked){border-color:var(--vert-clair);background:var(--vert-pale)}
+.opt-livr input[type=radio]{width:17px;height:17px;accent-color:var(--vert-clair);flex-shrink:0}
+.opt-livr-label{flex:1}
+.opt-livr-label strong{display:block;font-size:.88rem;font-weight:700;color:var(--vert)}
+.opt-livr-label small{font-size:.76rem;color:var(--texte-doux)}
+.opt-livr-prix{font-weight:800;font-size:.88rem;color:var(--vert);white-space:nowrap}
+.opt-livr-prix.gratuit{color:var(--vert-clair)}
+/* Options paiement */
+.options-pmt{display:flex;flex-direction:column;gap:12px}
+.opt-pmt{display:flex;align-items:center;gap:14px;padding:13px 16px;border:2px solid var(--bordure);border-radius:var(--r-md);cursor:pointer;transition:all var(--tr)}
+.opt-pmt:has(input:checked){border-color:var(--vert-clair);background:var(--vert-pale)}
+.opt-pmt input[type=radio]{width:17px;height:17px;accent-color:var(--vert-clair);flex-shrink:0}
+.pmt-icone{font-size:1.5rem;flex-shrink:0}
+.opt-pmt-label strong{display:block;font-size:.88rem;font-weight:700;color:var(--vert)}
+.opt-pmt-label small{font-size:.76rem;color:var(--texte-doux)}
+/* Récap */
+.recap-card{background:var(--blanc);border:1px solid var(--bordure);border-radius:var(--r-xl);overflow:hidden;position:sticky;top:80px}
+.recap-entete{background:var(--vert);color:var(--blanc);padding:14px 20px;font-family:var(--font-titre);font-size:1.05rem}
+.recap-articles{padding:14px 18px;border-bottom:1px solid var(--bordure);display:flex;flex-direction:column;gap:10px;max-height:240px;overflow-y:auto}
+.recap-art{display:flex;align-items:center;gap:12px}
+.recap-art-img{width:44px;height:44px;background:var(--vert-pale);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;overflow:hidden}
+.recap-art-img img{width:100%;height:100%;object-fit:cover}
+.recap-art-nom{flex:1;font-size:.85rem;font-weight:700;color:var(--texte)}
+.recap-art-prix{font-size:.85rem;font-weight:800;color:var(--vert);white-space:nowrap}
+.recap-totaux{padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.recap-ligne{display:flex;justify-content:space-between;font-size:.85rem;color:var(--texte-doux)}
+.recap-ligne.total{font-size:1.05rem;font-weight:800;color:var(--vert);border-top:2px solid var(--bordure);padding-top:8px;margin-top:4px}
+.btn-payer{width:100%;padding:15px;font-size:1rem;font-weight:800;background:var(--or);color:var(--blanc);border:none;border-radius:0 0 var(--r-xl) var(--r-xl);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all var(--tr)}
+.btn-payer:hover:not(:disabled){background:#a87716}
+.btn-payer:disabled{background:var(--texte-doux);cursor:not-allowed}
+.secu-badge{text-align:center;font-size:.75rem;color:var(--texte-doux);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:5px}
+.err-api{background:#fdecea;color:#c0392b;padding:13px;border-radius:var(--r-md);font-size:.86rem;margin-top:12px;display:none}
+.err-api.visible{display:block}
+
+/* ══════════════════════════════════════════════
+   PAGE CONFIRMATION (section inline)
+══════════════════════════════════════════════ */
+.page-confirm{display:none;position:fixed;inset:0;z-index:5000;background:var(--ivoire);overflow-y:auto;padding-top:66px}
+.page-confirm.visible{display:block}
+.confirm-wrapper{min-height:calc(100vh - 66px);display:flex;align-items:center;justify-content:center;padding:32px 18px}
+.confirm-card{background:var(--blanc);border:1px solid var(--bordure);border-radius:var(--r-xl);padding:48px 36px;max-width:520px;width:100%;text-align:center;box-shadow:0 16px 56px var(--ombre)}
+.confirm-icone{font-size:5rem;display:block;margin-bottom:20px;animation:bounceIn .6s cubic-bezier(.175,.885,.32,1.275) both}
+@keyframes bounceIn{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.1)}80%{transform:scale(.95)}100%{transform:scale(1);opacity:1}}
+.confirm-titre{font-family:var(--font-titre);font-size:2.1rem;color:var(--vert);margin-bottom:12px}
+.confirm-titre.echec{color:#c0392b}
+.confirm-sub{font-size:.95rem;color:var(--texte-doux);line-height:1.7;margin-bottom:24px}
+.confirm-recap{background:var(--vert-pale);border-radius:var(--r-md);padding:18px;text-align:left;margin-bottom:24px}
+.confirm-recap h3{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--vert-clair);margin-bottom:12px}
+.confirm-ligne{display:flex;justify-content:space-between;padding:5px 0;font-size:.85rem;border-bottom:1px solid var(--bordure)}
+.confirm-ligne:last-child{border-none;font-weight:800;color:var(--vert)}
+.num-cmd{display:inline-block;background:var(--vert);color:var(--blanc);font-size:.85rem;font-weight:700;padding:6px 18px;border-radius:var(--r-full);margin-bottom:24px;letter-spacing:.04em}
+.confirm-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.redirect-bar{margin-top:20px;font-size:.75rem;color:var(--texte-doux)}
+.progress{height:3px;background:var(--bordure);border-radius:var(--r-full);overflow:hidden;margin-top:5px}
+.progress-fill{height:100%;background:var(--vert-clair);width:0;transition:width linear}
+
+/* ══════════════════════════════════════════════
+   TOAST + SCROLL TOP
+══════════════════════════════════════════════ */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--vert);color:var(--blanc);padding:12px 22px;border-radius:var(--r-full);font-size:.88rem;font-weight:700;box-shadow:0 8px 28px rgba(0,0,0,.15);z-index:9999;transition:transform .35s ease,opacity .35s ease;opacity:0;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.scroll-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;background:var(--vert-clair);color:var(--blanc);border-radius:var(--r-full);font-size:.9rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.14);transition:all var(--tr);z-index:1500;opacity:0;pointer-events:none}
+.scroll-top.visible{opacity:1;pointer-events:all}
+.scroll-top:hover{background:var(--vert);transform:translateY(-3px)}
+
+/* ── Déclencheur admin secret : @ invisible dans le footer ── */
+#adminTrigger{
+  color:rgba(255,255,255,0.25);  /* très discret — visible si on cherche, invisible sinon */
+  user-select:none;              /* ne peut pas être sélectionné */
+  cursor:default;                /* pas de curseur spécial */
+  font-size:inherit;
+  font-weight:700;
+  margin-left:6px;
+  letter-spacing:0;
+  -webkit-tap-highlight-color:transparent; /* pas de flash au tap mobile */
+  transition:color 0.2s;
+}
+#adminTrigger:hover{
+  color:rgba(255,255,255,0.45);  /* légèrement plus visible au survol */
+}
+
+/* ── Preview image dans formulaire admin ── */
+.img-upload-zone{
+  border:2px dashed var(--bordure);
+  border-radius:var(--r-md);
+  padding:20px;
+  text-align:center;
+  background:var(--ivoire);
+  cursor:pointer;
+  transition:border-color var(--tr),background var(--tr);
+  position:relative;
+}
+.img-upload-zone:hover{border-color:var(--vert-clair);background:var(--vert-pale)}
+.img-upload-zone input[type=file]{
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+}
+.img-upload-zone .upload-label{
+  font-size:.88rem;color:var(--texte-doux);pointer-events:none;
+}
+.img-upload-zone .upload-label strong{color:var(--vert);display:block;margin-bottom:4px}
+.img-preview-wrap{
+  margin-top:10px;display:none;
+  flex-direction:column;align-items:center;gap:8px;
+}
+.img-preview-wrap.visible{display:flex}
+.img-preview{
+  width:120px;height:120px;object-fit:cover;
+  border-radius:var(--r-md);border:2px solid var(--vert-clair);
+}
+.btn-suppr-img{
+  font-size:.78rem;color:#c0392b;background:none;border:none;cursor:pointer;
+  font-weight:700;transition:color var(--tr);
+}
+.btn-suppr-img:hover{color:#922b21}
+
+/* ══════════════════════════════════════════════
+   MEDIA QUERIES
+══════════════════════════════════════════════ */
+@media(min-width:580px){
+  .grille{grid-template-columns:repeat(2,1fr)}
+  .avantages-grille{grid-template-columns:repeat(2,1fr)}
+  .form-row{grid-template-columns:1fr 1fr}
+  .footer-inner{grid-template-columns:2fr 1fr 1fr}
+}
+@media(min-width:900px){
+  .nav-liens{display:flex}
+  .hamburger{display:none}
+  .hero-inner{grid-template-columns:1fr 340px}
+  .hero-content{max-width:none}
+  .hero-visuel{max-width:none}
+  .grille{grid-template-columns:repeat(3,1fr)}
+  .avantages-grille{grid-template-columns:repeat(4,1fr)}
+  .contact-inner{grid-template-columns:1fr 1fr;align-items:start}
+  .cmd-grille{grid-template-columns:1fr 360px;align-items:start}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#accueil" class="logo" onclick="fermerToutesPages()">
+      <div class="logo-mark">🌿</div>
+      <span class="logo-nom">BSSD <em>Alimentation</em></span>
+    </a>
+    <nav class="nav-liens" id="navLiens">
+      <a href="#accueil" class="nav-lien" onclick="fermerToutesPages()">Accueil</a>
+      <a href="#boutique" class="nav-lien" onclick="fermerToutesPages()">Boutique</a>
+      <a href="#avantages" class="nav-lien" onclick="fermerToutesPages()">Avantages</a>
+      <a href="#contact" class="nav-lien" onclick="fermerToutesPages()">Contact</a>
+    </nav>
+    <div class="nav-droite">
+      <button class="btn-panier" id="btnPanier" onclick="ouvrirPanier()" aria-label="Ouvrir le panier">
+        🛒<span class="badge" id="badge">0</span>
+      </button>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Menu mobile -->
+<nav class="menu-mobile" id="menuMobile">
+  <a href="#accueil" class="nav-lien" onclick="fermerMenu();fermerToutesPages()">Accueil</a>
+  <a href="#boutique" class="nav-lien" onclick="fermerMenu();fermerToutesPages()">Boutique</a>
+  <a href="#avantages" class="nav-lien" onclick="fermerMenu();fermerToutesPages()">Avantages</a>
+  <a href="#contact" class="nav-lien" onclick="fermerMenu();fermerToutesPages()">Contact</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero" id="accueil">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Livraison Cotonou & Calavi · Épicerie en gros & détail</p>
+        <h1 class="hero-titre">Packs à 10 000, 20 000<br/><em>et 25 000 FCFA</em></h1>
+        <p class="hero-desc">Riz, sardines, tomates en boîte, huile en bidon — en pack ou à l'unité. Choisissez votre pack, composez le vôtre, ou achetez vos produits séparément. Payez en Mobile Money, livré à Cotonou ou Calavi.</p>
+        <div class="hero-cta">
+          <a href="#boutique" class="btn btn-vert">Voir la boutique</a>
+          <a href="#avantages" class="btn btn-outline">Comment ça marche</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><strong id="statProduits">0</strong><span>Produits disponibles</span></div>
+          <div class="stat"><strong>100%</strong><span>Qualité certifiée</span></div>
+          <div class="stat"><strong>24h</strong><span>Livraison rapide</span></div>
+        </div>
+      </div>
+      <div class="hero-visuel" aria-hidden="true">
+        <div class="hero-emoji">🍚</div><div class="hero-emoji">🥫</div><div class="hero-emoji">🐟</div>
+        <div class="hero-emoji">🛢️</div><div class="hero-emoji">🍱</div><div class="hero-emoji">🥡</div>
+        <div class="hero-emoji">🍛</div><div class="hero-emoji">📦</div><div class="hero-emoji">🫙</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     BANDEAU PROMO
+══════════════════════════════════════ -->
+<div class="bandeau">
+  <div class="bandeau-piste">
+    <span>🛒 Packs disponibles à 10 000 · 20 000 · 25 000 FCFA</span><span class="sep">✦</span>
+    <span>🚚 Livraison à Cotonou &amp; Calavi</span><span class="sep">✦</span>
+    <span>🎁 Pack personnalisé selon votre budget</span><span class="sep">✦</span>
+    <span>🍚 Riz en sac · Sardines · Tomates en boîte · Huile en bidon</span><span class="sep">✦</span>
+    <span>📱 Paiement Mobile Money accepté</span><span class="sep">✦</span>
+    <span>🛒 Packs disponibles à 10 000 · 20 000 · 25 000 FCFA</span><span class="sep">✦</span>
+    <span>🚚 Livraison à Cotonou &amp; Calavi</span><span class="sep">✦</span>
+    <span>🎁 Pack personnalisé selon votre budget</span><span class="sep">✦</span>
+    <span>🍚 Riz en sac · Sardines · Tomates en boîte · Huile en bidon</span><span class="sep">✦</span>
+    <span>📱 Paiement Mobile Money accepté</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     BOUTIQUE
+══════════════════════════════════════ -->
+<section class="section boutique-section" id="boutique">
+  <div class="container">
+    <div class="sec-header">
+      <p class="sec-eyebrow">Notre sélection</p>
+      <h2 class="sec-titre">Nos packs &amp; produits épicerie</h2>
+      <p class="sec-sub">Packs à 10 000, 20 000 et 25 000 FCFA, pack personnalisé selon votre budget — ou nos produits alimentaires vendus à l'unité.</p>
+    </div>
+    <div class="filtres" id="filtres"></div>
+    <div class="grille" id="grille" role="list"></div>
+    <p class="etat-vide" id="etatVide" style="display:none">Aucun pack dans cette catégorie.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     AVANTAGES
+══════════════════════════════════════ -->
+<section class="section avantages-section" id="avantages">
+  <div class="container">
+    <div class="sec-header">
+      <p class="sec-eyebrow">Pourquoi BSSD Alimentation</p>
+      <h2 class="sec-titre">Qualité &amp; simplicité,<br/>au quotidien</h2>
+    </div>
+    <div class="avantages-grille">
+      <div class="avantage"><div class="avantage-icone">✅</div><h3>Qualité garantie</h3><p>Marques certifiées, produits contrôlés avant expédition. Aucun compromis sur la qualité de ce que vous mangez.</p></div>
+      <div class="avantage"><div class="avantage-icone">💰</div><h3>Prix pour tous</h3><p>Packs à partir de 10 000 FCFA, formules à 10 000, 20 000, 25 000 FCFA ou personnalisées — ou vos produits favoris à l'unité, hors pack.</p></div>
+      <div class="avantage"><div class="avantage-icone">🚚</div><h3>Cotonou & Calavi</h3><p>Livraison à domicile sous 24h à Cotonou et à Calavi. Même les bidons lourds et les sacs de riz.</p></div>
+      <div class="avantage"><div class="avantage-icone">💳</div><h3>Paiement Mobile Money</h3><p>MTN, Moov, Celtiis, cartes bancaires via FedaPay — paiement sécurisé et instantané depuis votre téléphone.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CONTACT
+══════════════════════════════════════ -->
+<section class="section contact-section" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <p class="sec-eyebrow">Contactez-nous</p>
+        <h2 class="sec-titre">Une question ?<br/>On vous répond.</h2>
+        <div class="contact-details">
+          <p>📍 Cotonou &amp; Calavi, Bénin</p>
+          <p>📞 +229 XX XX XX XX</p>
+          <p>📧 contact@bssd-alimentation.bj</p>
+          <p>🕐 Lun–Sam : 8h–19h</p>
+          <p>🚚 Livraison : Cotonou &amp; Calavi</p>
+        </div>
+      </div>
+      <div class="contact-form-bloc">
+        <form id="formContact" novalidate>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="fg"><label for="cNom">Votre nom</label><input type="text" id="cNom" placeholder="Oscar Freeman" required /></div>
+            <div class="fg"><label for="cTel">Téléphone</label><input type="tel" id="cTel" placeholder="+229 96 XX XX XX" required /></div>
+            <div class="fg"><label for="cMsg">Message</label><textarea id="cMsg" rows="4" placeholder="Je souhaite commander le pack..." required></textarea></div>
+            <button type="submit" class="btn btn-vert" style="align-self:flex-start">Envoyer le message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><div class="logo-mark">🌿</div><span class="logo-nom">BSSD <em>Alimentation</em></span></div>
+        <p>Riz, huiles, conserves et sardines,<br/>livrés à Cotonou &amp; Calavi.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="#accueil" onclick="fermerToutesPages()">Accueil</a>
+        <a href="#boutique" onclick="fermerToutesPages()">Boutique</a>
+        <a href="#avantages" onclick="fermerToutesPages()">Avantages</a>
+        <a href="#contact" onclick="fermerToutesPages()">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Légal</h4>
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">Confidentialité</a>
+      </div>
+    </div>
+    <p class="footer-copy">© <span id="annee"></span> BSSD Alimentation — Tous droits réservés.<span id="adminTrigger" aria-hidden="true" title="">@</span></p>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     DRAWER PANIER
+══════════════════════════════════════ -->
+<div class="overlay" id="overlayPanier" onclick="fermerPanier()"></div>
+<aside class="drawer" id="drawer" aria-label="Votre panier">
+  <div class="drawer-entete">
+    <h2>🛒 Mon Panier</h2>
+    <button class="btn-fermer" onclick="fermerPanier()">✕</button>
+  </div>
+  <div class="drawer-articles" id="drawerArticles"></div>
+  <div class="drawer-pied" id="drawerPied"></div>
+</aside>
+
+<!-- ══════════════════════════════════════
+     MODAL ADMIN
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="fermerAdmin()"></div>
+<div class="modal" id="modalAdmin" role="dialog" aria-modal="true" aria-label="Espace administration">
+  <div class="modal-entete">
+    <h2>⚙️ Administration</h2>
+    <button class="btn-fermer-modal" onclick="fermerAdmin()">✕</button>
+  </div>
+
+  <!-- Auth -->
+  <div class="admin-auth" id="adminAuth">
+    <p>Entrez le mot de passe pour accéder à l'administration.</p>
+    <div class="fg"><label for="mdpAdmin">Mot de passe</label><input type="password" id="mdpAdmin" placeholder="••••••••" onkeydown="if(event.key==='Enter')connexionAdmin()" /></div>
+    <div class="auth-err" id="authErr">Mot de passe incorrect.</div>
+    <button class="btn btn-vert" onclick="connexionAdmin()">Se connecter</button>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="admin-dash" id="adminDash">
+    <div class="onglets">
+      <button class="onglet actif" data-tab="tabAjout">➕ Ajouter un pack</button>
+      <button class="onglet" data-tab="tabGerer">📋 Gérer les packs</button>
+    </div>
+
+    <!-- TAB Ajout / Édition -->
+    <div class="tab-contenu actif" id="tabAjout">
+      <form class="admin-form" id="formProduit" onsubmit="sauvegarderProduit(event)">
+        <input type="hidden" id="editId" />
+        <div class="form-row">
+          <div class="fg"><label>Nom du pack <span class="req">*</span></label><input type="text" id="pNom" placeholder="Pack Riz Premium 25kg" required /></div>
+          <div class="fg"><label>Catégorie <span class="req">*</span></label>
+            <select id="pCat" required>
+              <option value="" disabled selected>Choisir une catégorie…</option>
+              <optgroup label="📦 Packs">
+                <option value="Pack 10 000">Pack 10 000</option>
+                <option value="Pack 20 000">Pack 20 000</option>
+                <option value="Pack 25 000">Pack 25 000</option>
+                <option value="Personnalisé">Pack personnalisé</option>
+              </optgroup>
+              <optgroup label="🛒 Hors pack">
+                <option value="À l'unité">À l'unité</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <div class="fg"><label>Description <span class="req">*</span></label><textarea id="pDesc" rows="3" placeholder="Contenu du pack : tomates 2 kg, oignons 1 kg…" required></textarea></div>
+        <div class="form-row">
+          <div class="fg"><label>Prix barré (FCFA) <span class="req">*</span></label><input type="number" id="pBarre" min="0" placeholder="15000" required oninput="majApercuRemise()" /></div>
+          <div class="fg"><label>Prix promo (FCFA) <span class="req">*</span></label><input type="number" id="pPromo" min="0" placeholder="10500" required oninput="majApercuRemise()" /></div>
+        </div>
+        <!-- Upload image directe avec prévisualisation -->
+        <div class="fg">
+          <label>Image du produit</label>
+          <div class="img-upload-zone" id="imgUploadZone">
+            <input type="file" id="pImgFile" accept="image/*" onchange="previsualiserImage(this)" />
+            <div class="upload-label">
+              <strong>📷 Cliquez pour choisir une image</strong>
+              JPG, PNG, WEBP — max 2 Mo
+            </div>
+          </div>
+          <!-- Prévisualisation après sélection -->
+          <div class="img-preview-wrap" id="imgPreviewWrap">
+            <img src="" alt="Aperçu" class="img-preview" id="imgPreview" />
+            <button type="button" class="btn-suppr-img" onclick="supprimerImageForm()">✕ Supprimer l'image</button>
+          </div>
+          <!-- Champ caché stockant le base64 de l'image -->
+          <input type="hidden" id="pImgData" value="" />
+          <small>Laissez vide pour utiliser l'emoji de la catégorie par défaut.</small>
+        </div>
+        <div class="apercu-remise" id="apercuRemise">Remise : <strong id="valRemise">—</strong></div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" onclick="reinitForm()">Annuler</button>
+          <button type="submit" class="btn btn-vert" id="btnSave">Enregistrer le pack</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- TAB Gestion -->
+    <div class="tab-contenu" id="tabGerer">
+      <div class="admin-recherche"><input type="search" id="recherche" placeholder="🔍 Rechercher un pack…" oninput="rendreTablAdmin(this.value)" /></div>
+      <div class="tbl-wrapper">
+        <table class="tbl" id="tblAdmin">
+          <thead><tr><th>Img</th><th>Nom</th><th>Cat.</th><th>Barré</th><th>Promo</th><th>Remise</th><th>Actions</th></tr></thead>
+          <tbody id="tblBody"></tbody>
+        </table>
+      </div>
+      <p class="etat-vide" id="adminVide" style="display:none">Aucun pack enregistré.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE COMMANDE (overlay)
+══════════════════════════════════════ -->
+<div class="page-commande" id="pageCommande">
+  <div class="cmd-entete">
+    <div class="container">
+      <h1>🛒 Finaliser ma commande</h1>
+      <button onclick="fermerCommande()">← Modifier mon panier</button>
+    </div>
+  </div>
+  <div style="background:var(--blanc);border-bottom:1px solid var(--bordure)">
+    <div class="etapes">
+      <div class="etape fait"><span class="etape-num">✓</span><span>Panier</span></div>
+      <div class="etape-sep"></div>
+      <div class="etape actif"><span class="etape-num">2</span><span>Informations</span></div>
+      <div class="etape-sep"></div>
+      <div class="etape"><span class="etape-num">3</span><span>Confirmation</span></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="cmd-grille">
+      <!-- Formulaire -->
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <!-- Infos client -->
+        <div class="cmd-card">
+          <h2>👤 Vos informations</h2>
+          <div class="form-row" style="gap:14px">
+            <div class="fg"><label>Prénom <span class="req">*</span></label><input type="text" id="cPrenom" placeholder="Oscar" /></div>
+            <div class="fg"><label>Nom <span class="req">*</span></label><input type="text" id="cNomCmd" placeholder="Freeman" /></div>
+            <div class="fg"><label>Téléphone <span class="req">*</span></label><input type="tel" id="cPhone" placeholder="+229 96 XX XX XX" /></div>
+            <div class="fg"><label>Email</label><input type="email" id="cEmail" placeholder="oscar@exemple.com" /></div>
+            <div class="fg" style="grid-column:1/-1"><label>Adresse de livraison <span class="req">*</span></label><textarea id="cAdresse" rows="2" placeholder="Quartier, rue, point de repère — Cotonou"></textarea></div>
+            <div class="fg"><label>Ville de livraison <span class="req">*</span></label>
+              <select id="cVille" onchange="majRecap()">
+                <option value="Cotonou" selected>Cotonou</option>
+                <option value="Calavi">Calavi</option>
+              </select>
+            </div>
+            <div class="fg"><label>Note livraison</label><input type="text" id="cNotes" placeholder="Appeler à l'arrivée…" /></div>
+          </div>
+        </div>
+        <!-- Livraison -->
+        <div class="cmd-card">
+          <h2>🚚 Mode de livraison</h2>
+          <div class="options-livr">
+            <label class="opt-livr"><input type="radio" name="livr" value="cotonou" checked onchange="majRecap()" /><div class="opt-livr-label"><strong>🏙️ Livraison Cotonou (24–48h)</strong><small>Tous les quartiers de Cotonou</small></div><span class="opt-livr-prix" id="prixCotonou">1 000 FCFA</span></label>
+            <label class="opt-livr"><input type="radio" name="livr" value="calavi" onchange="majRecap()" /><div class="opt-livr-label"><strong>🏘️ Livraison Calavi (24–48h)</strong><small>Calavi, Abomey-Calavi et environs</small></div><span class="opt-livr-prix">1 500 FCFA</span></label>
+            <label class="opt-livr"><input type="radio" name="livr" value="retrait" onchange="majRecap()" /><div class="opt-livr-label"><strong>🏪 Retrait sur place</strong><small>Disponible dès demain matin</small></div><span class="opt-livr-prix gratuit">Gratuit</span></label>
+          </div>
+        </div>
+        <!-- Paiement -->
+        <div class="cmd-card">
+          <h2>💳 Mode de paiement</h2>
+          <div class="options-pmt">
+            <label class="opt-pmt"><input type="radio" name="pmt" value="mobile_money" checked /><span class="pmt-icone">📱</span><div class="opt-pmt-label"><strong>Mobile Money</strong><small>MTN, Moov, Celtiis — via FedaPay</small></div></label>
+            <label class="opt-pmt"><input type="radio" name="pmt" value="carte" /><span class="pmt-icone">💳</span><div class="opt-pmt-label"><strong>Carte bancaire</strong><small>Visa, Mastercard — via FedaPay</small></div></label>
+          </div>
+        </div>
+        <div class="err-api" id="errApi">⚠️ <span id="errApiMsg"></span></div>
+      </div>
+      <!-- Récap -->
+      <div class="recap-card">
+        <div class="recap-entete">📋 Récapitulatif</div>
+        <div class="recap-articles" id="recapArts"></div>
+        <div class="recap-totaux" id="recapTotaux"></div>
+        <button class="btn-payer" id="btnPayer" onclick="lancerPaiement()">🔒 Payer maintenant</button>
+        <p class="secu-badge">🔒 Sécurisé par <strong>FedaPay</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE CONFIRMATION (overlay)
+══════════════════════════════════════ -->
+<div class="page-confirm" id="pageConfirm">
+  <div class="confirm-wrapper">
+    <div class="confirm-card" id="confirmCard"></div>
+  </div>
+</div>
+
+<!-- Toast + Scroll top -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Remonter">▲</button>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<!-- Firebase SDK (compat, simple à utiliser en script inline) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script>
+/* ─────────────────────────────────────────────
+   0. FIREBASE — catalogue produits partagé en temps réel
+───────────────────────────────────────────── */
+const firebaseConfig = {
+  apiKey: "AIzaSyABFM8GfwvB-VK5swf46n3Du7mVYDgR28Q",
+  authDomain: "bssd-alimentation.firebaseapp.com",
+  projectId: "bssd-alimentation",
+  storageBucket: "bssd-alimentation.firebasestorage.app",
+  messagingSenderId: "40336373627",
+  appId: "1:40336373627:web:c7100730dc03a92e626fde"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const PRODUITS_COL = 'produits';
+/* Connexion anonyme : nécessaire pour être autorisé à écrire (ajout/édition/suppression
+   de produits) selon les règles Firestore. La lecture reste publique pour tous. */
+firebase.auth().signInAnonymously().catch(err=>console.error('Auth anonyme Firebase :',err));
+</script>
+<!-- FedaPay Checkout.js — paiement Mobile Money / carte bancaire -->
+<script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
+<script>
+const FEDAPAY_PUBLIC_KEY = 'pk_live_hefMW_4YGGGutPtDu8GJViGv';
+</script>
+<script>
+/* ══════════════════════════════════════════════════════════════
+   BSSD ALIMENTATION — app.js (inline)
+   Modules :
+   1. Données initiales
+   2. État de l'application
+   3. LocalStorage
+   4. Utilitaires
+   5. Boutique (filtres + grille)
+   6. Panier (drawer)
+   7. Page commande
+   8. Page confirmation
+   9. Admin (modal + CRUD)
+   10. UI (navbar, scroll, menu, contact)
+══════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────
+   1. DONNÉES INITIALES
+───────────────────────────────────────────── */
+const PRODUITS_DEFAUT = [
+  {
+    id:'p1', nom:'Pack Épicerie 20 000 FCFA',
+    desc:"Le pack pratique : Riz parfumé (5 kg) + Huile végétale (1 L) + Tomates en boîte x3 + Sardines x4 boîtes. Idéal pour compléter les courses du mois.",
+    barre:26000, promo:20000, img:'', emoji:'🥫', cat:'Pack 20 000'
+  },
+  {
+    id:'p2', nom:'Pack Riz & Conserves 10 000 FCFA',
+    desc:"Le pack du quotidien : Riz parfumé (5 kg) + Tomates en boîte x3 + Sardines x4 boîtes + Huile végétale (1 L). De quoi cuisiner plusieurs repas pour la famille.",
+    barre:13500, promo:10000, img:'', emoji:'🍚', cat:'Pack 10 000'
+  },
+  {
+    id:'p3', nom:'Pack Familial 25 000 FCFA',
+    desc:"Le grand pack mensuel : Riz parfumé (25 kg) + Huile végétale bidon (5 L) + Tomates en boîte x6 + Sardines x12 boîtes + Haricots en conserve x4. Tout pour le mois.",
+    barre:32000, promo:25000, img:'', emoji:'📦', cat:'Pack 25 000'
+  },
+  {
+    id:'p4', nom:'Pack Personnalisé',
+    desc:"Composez votre propre pack selon votre budget et vos besoins. Choisissez parmi nos produits disponibles : riz, sardines, tomates en boîte, huile en bidon, conserves variées. Contactez-nous pour le devis.",
+    barre:0, promo:0, img:'', emoji:'✏️', cat:'Personnalisé'
+  },
+  {
+    id:'p5', nom:'Riz parfumé',
+    desc:"Riz parfumé de qualité, vendu à l'unité — quantité et prix à préciser avec nous.",
+    barre:0, promo:0, img:'', emoji:'🍚', cat:"À l'unité"
+  },
+  {
+    id:'p6', nom:'Sardines (boîte)',
+    desc:"Boîte de sardines, vendue à l'unité — prix à préciser avec nous.",
+    barre:0, promo:0, img:'', emoji:'🐟', cat:"À l'unité"
+  },
+  {
+    id:'p7', nom:'Tomate concentrée (boîte)',
+    desc:"Boîte de tomate concentrée, vendue à l'unité — prix à préciser avec nous.",
+    barre:0, promo:0, img:'', emoji:'🥫', cat:"À l'unité"
+  },
+  {
+    id:'p8', nom:'Huile végétale',
+    desc:"Huile végétale, vendue à l'unité — format et prix à préciser avec nous.",
+    barre:0, promo:0, img:'', emoji:'🛢️', cat:"À l'unité"
+  },
+  {
+    id:'p9', nom:'Haricots en conserve',
+    desc:"Boîte de haricots en conserve, vendue à l'unité — prix à préciser avec nous.",
+    barre:0, promo:0, img:'', emoji:'🫘', cat:"À l'unité"
+  },
+];
+
+/* ─────────────────────────────────────────────
+   2. ÉTAT
+───────────────────────────────────────────── */
+const E = {
+  produits: [],
+  panier:   [],
+  catActive:'all',
+  adminOk:  false,
+};
+const PWD_ADMIN = 'bssdalimentation2025';
+const LS_PANIER = 'fp_panier';
+
+/* ─────────────────────────────────────────────
+   3. FIRESTORE — produits (temps réel)
+───────────────────────────────────────────── */
+let produitsPretUneFois=false;
+function chargerProduits(){
+  document.getElementById('grille').innerHTML='<p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--texte-doux)">⏳ Chargement du catalogue…</p>';
+  db.collection(PRODUITS_COL).onSnapshot(async (snap)=>{
+    if(snap.empty && !produitsPretUneFois){
+      // Première utilisation du site : on sème le catalogue par défaut dans Firestore
+      produitsPretUneFois=true;
+      try{
+        const batch=db.batch();
+        PRODUITS_DEFAUT.forEach(p=>{ batch.set(db.collection(PRODUITS_COL).doc(p.id), p); });
+        await batch.commit();
+      }catch(err){ console.error('Erreur initialisation catalogue :',err); toast('⚠️ Impossible d\'initialiser le catalogue'); }
+      return; // onSnapshot va se redéclencher automatiquement avec les données créées
+    }
+    produitsPretUneFois=true;
+    E.produits=snap.docs.map(d=>({id:d.id,...d.data()}));
+    initBoutique();
+    if(E.adminOk) rendreTablAdmin(document.getElementById('recherche')?.value||'');
+  }, (err)=>{
+    console.error('Erreur Firestore (produits) :',err);
+    toast('⚠️ Connexion au catalogue impossible — vérifiez votre connexion internet');
+    E.produits=[...PRODUITS_DEFAUT];
+    initBoutique();
+  });
+}
+function chargerPanier(){
+  try{ const s=localStorage.getItem(LS_PANIER); E.panier=s?JSON.parse(s):[]; }
+  catch(e){ E.panier=[]; }
+}
+function sauverPanier(){ localStorage.setItem(LS_PANIER,JSON.stringify(E.panier)); }
+
+/* ─────────────────────────────────────────────
+   4. UTILITAIRES
+───────────────────────────────────────────── */
+function fPrix(n){ return n.toLocaleString('fr-FR')+' FCFA'; }
+function remise(b,p){ return b>0?Math.round(((b-p)/b)*100):0; }
+function genId(){ return 'p'+Date.now(); }
+function toast(msg,d=2800){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),d);
+}
+
+/* ─────────────────────────────────────────────
+   5. BOUTIQUE
+───────────────────────────────────────────── */
+function rendreFiltres(){
+  const c=document.getElementById('filtres');
+  const cats=[...new Set(E.produits.map(p=>p.cat).filter(Boolean))];
+  c.innerHTML=`<button class="filtre-btn${E.catActive==='all'?' actif':''}" data-cat="all">Tous</button>`+
+    cats.map(cat=>`<button class="filtre-btn${E.catActive===cat?' actif':''}" data-cat="${cat}">${cat}</button>`).join('');
+  c.querySelectorAll('.filtre-btn').forEach(b=>b.addEventListener('click',()=>{
+    E.catActive=b.dataset.cat; rendreFiltres(); rendreGrille();
+  }));
+}
+
+function rendreGrille(){
+  const g=document.getElementById('grille');
+  const ev=document.getElementById('etatVide');
+  const sp=document.getElementById('statProduits');
+  if(sp) sp.textContent=E.produits.length;
+  const liste=E.catActive==='all'?E.produits:E.produits.filter(p=>p.cat===E.catActive);
+  g.innerHTML='';
+  if(!liste.length){ ev.style.display='block'; return; }
+  ev.style.display='none';
+  liste.forEach((p,i)=>{
+    const r=remise(p.barre,p.promo);
+    const estPersonnalise = p.promo===0;
+    const imgH=p.img
+      ?`<img src="${p.img}" alt="${p.nom}" loading="lazy" />`
+      :`<div class="carte-emoji-ph">${p.emoji||'📦'}</div>`;
+    const badgeH=r>0?`<div class="ruban">-${r}%</div>`:'';
+    const prixHtml = estPersonnalise
+      ? `<span class="prix-promo" style="font-size:1.1rem;color:var(--or)">Prix selon votre choix</span>`
+      : `<span class="prix-promo">${fPrix(p.promo)}</span>${p.barre>p.promo?`<span class="prix-barre">${fPrix(p.barre)}</span>`:''}`;
+    const btnLabel = estPersonnalise ? '📞 Nous contacter' : '🛒 Ajouter au panier';
+    const d=document.createElement('article');
+    d.className='carte'; d.role='listitem'; d.style.animationDelay=`${i*0.05}s`;
+    d.innerHTML=`
+      <div class="carte-img">${imgH}${badgeH}</div>
+      <div class="carte-corps">
+        <span class="carte-cat">${p.cat||'Général'}</span>
+        <h3 class="carte-nom">${p.nom}</h3>
+        <p class="carte-desc">${p.desc}</p>
+        <div class="carte-prix">${prixHtml}</div>
+      </div>
+      <div class="carte-pied">
+        <button class="btn-ajout" data-id="${p.id}" data-perso="${estPersonnalise}">${btnLabel}</button>
+      </div>`;
+    d.querySelector('.btn-ajout').addEventListener('click',()=>{
+      if(estPersonnalise){
+        document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+        toast('📞 Contactez-nous pour composer votre pack personnalisé !', 4000);
+      } else {
+        ajouterPanier(p.id);
+      }
+    });
+    g.appendChild(d);
+  });
+}
+
+function initBoutique(){ rendreFiltres(); rendreGrille(); }
+
+/* ─────────────────────────────────────────────
+   6. PANIER
+───────────────────────────────────────────── */
+function ajouterPanier(id){
+  const p=E.produits.find(x=>x.id===id); if(!p)return;
+  const ex=E.panier.find(x=>x.id===id);
+  if(ex) ex.qte++;
+  else E.panier.push({id:p.id,nom:p.nom,promo:p.promo,img:p.img,emoji:p.emoji||'📦',qte:1});
+  sauverPanier(); majBadge(); rendrePanier();
+  toast(`✅ "${p.nom}" ajouté`);
+  const btn=document.querySelector(`.btn-ajout[data-id="${id}"]`);
+  if(btn){ btn.classList.add('ajoute'); btn.textContent='✓ Ajouté !';
+    setTimeout(()=>{btn.classList.remove('ajoute');btn.innerHTML='🛒 Ajouter au panier';},1500); }
+}
+
+function modQte(id,d){
+  const it=E.panier.find(x=>x.id===id); if(!it)return;
+  it.qte+=d;
+  if(it.qte<=0){ E.panier=E.panier.filter(x=>x.id!==id); toast('🗑 Retiré du panier'); }
+  sauverPanier(); majBadge(); rendrePanier(); majRecap();
+}
+
+function suppArt(id){
+  E.panier=E.panier.filter(x=>x.id!==id);
+  sauverPanier(); majBadge(); rendrePanier(); majRecap(); toast('🗑 Article retiré');
+}
+
+function majBadge(){
+  const n=E.panier.reduce((s,i)=>s+i.qte,0);
+  const b=document.getElementById('badge');
+  b.textContent=n; b.style.display=n?'flex':'none';
+}
+
+function sousTotal(){ return E.panier.reduce((s,i)=>s+i.promo*i.qte,0); }
+
+function rendrePanier(){
+  const da=document.getElementById('drawerArticles');
+  const dp=document.getElementById('drawerPied');
+  if(!E.panier.length){
+    da.innerHTML=`<div class="panier-vide"><span>🛒</span><p>Votre panier est vide.</p></div>`;
+    dp.innerHTML=''; return;
+  }
+  da.innerHTML=E.panier.map(it=>{
+    const imgH=it.img?`<img src="${it.img}" alt="${it.nom}" />`:`${it.emoji}`;
+    return `<div class="art">
+      <div class="art-img">${it.img?`<img src="${it.img}" alt="${it.nom}" />`:it.emoji}</div>
+      <div class="art-info">
+        <div class="art-nom">${it.nom}</div>
+        <div class="art-prix-unit">${fPrix(it.promo)} / unité</div>
+        <div class="art-qty">
+          <button class="btn-qty" onclick="modQte('${it.id}',-1)">−</button>
+          <span class="qty-val">${it.qte}</span>
+          <button class="btn-qty" onclick="modQte('${it.id}',1)">+</button>
+        </div>
+      </div>
+      <div class="art-droite">
+        <button class="btn-suppr" onclick="suppArt('${it.id}')" title="Retirer">✕</button>
+        <span class="art-total">${fPrix(it.promo*it.qte)}</span>
+      </div>
+    </div>`;
+  }).join('');
+  const st=sousTotal();
+  const livr=st>=25000?0:1500;
+  const tot=st+livr;
+  const nb=E.panier.reduce((s,i)=>s+i.qte,0);
+  dp.innerHTML=`
+    <div class="totaux">
+      <div class="t-ligne"><span>Sous-total (${nb} article${nb>1?'s':''})</span><span>${fPrix(st)}</span></div>
+      <div class="t-ligne"><span>Livraison</span><span>${livr===0?'<span style="color:var(--vert-clair);font-weight:700">Gratuite ✓</span>':fPrix(livr)}</span></div>
+      <div class="t-ligne total"><span>Total</span><span>${fPrix(tot)}</span></div>
+    </div>
+    <button class="btn-cmd" onclick="ouvrirCommande()">Passer commande →</button>
+    <button class="btn-vider" onclick="viderPanier()">🗑 Vider le panier</button>`;
+}
+
+function viderPanier(){
+  E.panier=[]; sauverPanier(); majBadge(); rendrePanier(); toast('🗑 Panier vidé');
+}
+
+function ouvrirPanier(){
+  document.getElementById('drawer').classList.add('ouvert');
+  document.getElementById('overlayPanier').classList.add('ouvert');
+  document.body.style.overflow='hidden';
+}
+function fermerPanier(){
+  document.getElementById('drawer').classList.remove('ouvert');
+  document.getElementById('overlayPanier').classList.remove('ouvert');
+  document.body.style.overflow='';
+}
+
+/* ─────────────────────────────────────────────
+   7. PAGE COMMANDE
+───────────────────────────────────────────── */
+const TARIFS={cotonou:1000, calavi:1500, retrait:0};
+
+function livrSelected(){ return document.querySelector('input[name="livr"]:checked')?.value||'cotonou'; }
+function pmtSelected(){  return document.querySelector('input[name="pmt"]:checked')?.value||'mobile_money'; }
+
+function fraisLivr(){
+  return TARIFS[livrSelected()]??0;
+}
+
+function majRecap(){
+  const ra=document.getElementById('recapArts');
+  const rt=document.getElementById('recapTotaux');
+  const bp=document.getElementById('btnPayer');
+  if(!ra||!rt)return;
+  if(!E.panier.length){
+    ra.innerHTML='<div style="text-align:center;padding:20px;color:var(--texte-doux);font-size:.85rem">Panier vide</div>';
+    rt.innerHTML=''; if(bp)bp.disabled=true; return;
+  }
+  if(bp)bp.disabled=false;
+  ra.innerHTML=E.panier.map(it=>
+    `<div class="recap-art">
+      <div class="recap-art-img">${it.img?`<img src="${it.img}" alt="${it.nom}" />`:it.emoji}</div>
+      <span class="recap-art-nom">${it.nom} <span style="color:var(--texte-doux)">×${it.qte}</span></span>
+      <span class="recap-art-prix">${fPrix(it.promo*it.qte)}</span>
+    </div>`).join('');
+  const st=sousTotal(); const fl=fraisLivr(); const tot=st+fl;
+  const nb=E.panier.reduce((s,i)=>s+i.qte,0);
+  rt.innerHTML=`
+    <div class="recap-ligne"><span>Sous-total (${nb} art.)</span><span>${fPrix(st)}</span></div>
+    <div class="recap-ligne"><span>Livraison</span><span>${fl===0?'<span style="color:var(--vert-clair);font-weight:700">Gratuite ✓</span>':fPrix(fl)}</span></div>
+    <div class="recap-ligne total"><span>Total</span><span>${fPrix(tot)}</span></div>`;
+  if(bp){ const t=bp.querySelector('.bp-txt')||bp;
+    bp.innerHTML=`<span>🔒 Payer ${fPrix(tot)}</span>`; }
+}
+
+function ouvrirCommande(){
+  fermerPanier();
+  document.getElementById('pageCommande').classList.add('visible');
+  document.body.style.overflow='hidden';
+  majRecap();
+}
+function fermerCommande(){
+  document.getElementById('pageCommande').classList.remove('visible');
+  document.body.style.overflow='';
+}
+
+async function lancerPaiement(){
+  const bp=document.getElementById('btnPayer');
+  const errBloc=document.getElementById('errApi');
+  const errMsg=document.getElementById('errApiMsg');
+  errBloc.classList.remove('visible');
+
+  // Validation
+  const prenom=document.getElementById('cPrenom').value.trim();
+  const nom=document.getElementById('cNomCmd').value.trim();
+  const phone=document.getElementById('cPhone').value.trim();
+  const adresse=document.getElementById('cAdresse').value.trim();
+  const email=document.getElementById('cEmail').value.trim();
+  const ville=document.getElementById('cVille').value.trim();
+  const notes=document.getElementById('cNotes').value.trim();
+  if(!prenom||!nom){ toast('⚠️ Entrez votre nom et prénom'); return; }
+  if(!phone){ toast('⚠️ Entrez votre téléphone'); return; }
+  if(!adresse&&livrSelected()!=='retrait'){ toast('⚠️ Entrez votre adresse'); return; }
+  if(!E.panier.length){ toast('⚠️ Votre panier est vide'); return; }
+
+  const montant=Math.round(sousTotal()+fraisLivr());
+  // FedaPay exige un email client — on en génère un si le client n'en a pas fourni
+  const emailClient=email || `client${phone.replace(/[^0-9]/g,'')}@bssd-alimentation.bj`;
+
+  bp.disabled=true;
+  bp.innerHTML='<span style="display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite"></span> Ouverture du paiement…';
+
+  try{
+    const widget=FedaPay.init({
+      public_key: FEDAPAY_PUBLIC_KEY,
+      transaction:{
+        amount: montant,
+        description: `Commande BSSD Alimentation — ${E.panier.reduce((s,i)=>s+i.qte,0)} article(s)`
+      },
+      currency:{ iso:'XOF' },
+      customer:{
+        email: emailClient,
+        firstname: prenom,
+        lastname: nom,
+        phone_number:{ number: phone, country:'BJ' }
+      },
+      onComplete: async (resp)=>{
+        const FP=window['FedaPay'];
+        bp.disabled=false; majRecap();
+        if(resp.reason===FP.DIALOG_DISMISSED){
+          return; // Le client a fermé la fenêtre de paiement — panier conservé, rien d'autre à faire
+        }
+        const transaction=resp.transaction;
+        if(transaction && transaction.status==='approved'){
+          await enregistrerCommande({transaction,prenom,nom,phone,email:emailClient,adresse,ville,notes,montant});
+          fermerCommande();
+          afficherConfirmation('approved', transaction.id);
+        } else {
+          afficherConfirmation('echec', transaction?transaction.id:null);
+        }
+      }
+    });
+    widget.open();
+  }catch(err){
+    console.error('Erreur FedaPay :',err);
+    errMsg.textContent='Erreur lors de l\'ouverture du paiement. Réessayez.';
+    errBloc.classList.add('visible');
+    bp.disabled=false; majRecap();
+  }
+}
+
+/* Enregistre la commande payée dans Firestore pour que vous puissiez la consulter
+   depuis la console Firebase (onglet Firestore Database → collection "commandes") */
+async function enregistrerCommande({transaction,prenom,nom,phone,email,adresse,ville,notes,montant}){
+  try{
+    await db.collection('commandes').add({
+      transactionId: transaction.id,
+      statut: transaction.status,
+      client:{ prenom, nom, phone, email },
+      livraison:{ mode: livrSelected(), adresse, ville, notes, frais: fraisLivr() },
+      paiement: pmtSelected(),
+      articles: E.panier,
+      montant,
+      dateCreation: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  }catch(err){
+    console.error('Erreur enregistrement commande Firestore :',err);
+    // Le paiement a déjà réussi — on ne bloque pas le client pour cette erreur secondaire
+  }
+}
+
+/* ─────────────────────────────────────────────
+   8. PAGE CONFIRMATION
+───────────────────────────────────────────── */
+function genNumCmd(id){ if(id) return `BSSD-${id}`; const n=new Date(); return `BSSD-${n.getFullYear()}${String(n.getMonth()+1).padStart(2,'0')}${String(n.getDate()).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`; }
+
+function afficherConfirmation(statusForce, transactionId){
+  const params=new URLSearchParams(window.location.search);
+  const status=statusForce || params.get('status');
+  const page=document.getElementById('pageConfirm');
+  const card=document.getElementById('confirmCard');
+  if(!status)return; // Pas de statut → page normale
+  page.classList.add('visible');
+  document.body.style.overflow='hidden';
+
+  if(status==='approved'){
+    const panier=[...E.panier];
+    const tot=sousTotal();
+    const lignes=panier.map(i=>`<div class="confirm-ligne"><span>${i.nom} ×${i.qte}</span><span>${fPrix(i.promo*i.qte)}</span></div>`).join('');
+    const num=genNumCmd(transactionId);
+    card.innerHTML=`
+      <span class="confirm-icone">✅</span>
+      <h1 class="confirm-titre">Commande confirmée !</h1>
+      <p class="confirm-sub">Merci pour votre confiance. Votre paiement a bien été reçu.<br/>Vous allez recevoir une confirmation par SMS.</p>
+      <span class="num-cmd">Commande n° ${num}</span>
+      <div class="confirm-recap"><h3>📋 Votre commande</h3>${lignes}<div class="confirm-ligne" style="font-weight:800;color:var(--vert);font-size:1rem"><span>Total payé</span><span>${fPrix(tot)}</span></div></div>
+      <div class="confirm-actions"><button class="btn btn-vert" onclick="fermerConfirmation()">🛍 Continuer mes achats</button></div>
+      <div class="redirect-bar">Retour automatique dans <strong id="cpt">10</strong>s<div class="progress"><div class="progress-fill" id="pfill"></div></div></div>`;
+    // Vider le panier
+    E.panier=[]; sauverPanier(); majBadge();
+    // Compte à rebours
+    let s=10;
+    const pf=document.getElementById('pfill');
+    requestAnimationFrame(()=>{ pf.style.transition=`width ${s}s linear`; pf.style.width='100%'; });
+    const iv=setInterval(()=>{ s--; const c=document.getElementById('cpt'); if(c)c.textContent=s; if(s<=0){clearInterval(iv);fermerConfirmation();} },1000);
+  } else {
+    card.innerHTML=`
+      <span class="confirm-icone">❌</span>
+      <h1 class="confirm-titre echec">Paiement non abouti</h1>
+      <p class="confirm-sub">Votre paiement a été annulé ou a échoué.<br/>Vos articles restent dans votre panier.</p>
+      <div class="confirm-actions">
+        <button class="btn btn-vert" onclick="fermerConfirmation();ouvrirCommande()">🔄 Réessayer</button>
+        <button class="btn btn-outline" onclick="fermerConfirmation()">🏠 Accueil</button>
+      </div>`;
+  }
+}
+
+function fermerConfirmation(){
+  document.getElementById('pageConfirm').classList.remove('visible');
+  document.body.style.overflow='';
+  // Nettoyer le paramètre URL sans recharger
+  window.history.replaceState({},document.title,window.location.pathname);
+}
+
+function fermerToutesPages(){
+  fermerCommande();
+  document.getElementById('pageConfirm').classList.remove('visible');
+}
+
+/* ─────────────────────────────────────────────
+   9. ADMIN
+───────────────────────────────────────────── */
+function ouvrirAdmin(){
+  document.getElementById('modalOverlay').classList.add('ouvert');
+  document.getElementById('modalAdmin').classList.add('ouvert');
+  document.body.style.overflow='hidden';
+  if(E.adminOk) afficherDash();
+}
+function fermerAdmin(){
+  document.getElementById('modalOverlay').classList.remove('ouvert');
+  document.getElementById('modalAdmin').classList.remove('ouvert');
+  document.body.style.overflow='';
+}
+
+function connexionAdmin(){
+  const mdp=document.getElementById('mdpAdmin').value;
+  const err=document.getElementById('authErr');
+  if(mdp===PWD_ADMIN){ E.adminOk=true; err.classList.remove('visible'); afficherDash(); }
+  else{ err.classList.add('visible'); document.getElementById('mdpAdmin').value=''; }
+}
+
+function afficherDash(){
+  document.getElementById('adminAuth').style.display='none';
+  document.getElementById('adminDash').classList.add('visible');
+  rendreTablAdmin();
+}
+
+// Onglets admin
+document.querySelectorAll('.onglet').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.onglet').forEach(x=>x.classList.remove('actif'));
+    document.querySelectorAll('.tab-contenu').forEach(x=>x.classList.remove('actif'));
+    b.classList.add('actif');
+    document.getElementById(b.dataset.tab).classList.add('actif');
+    if(b.dataset.tab==='tabGerer') rendreTablAdmin();
+  });
+});
+
+function majApercuRemise(){
+  const b=parseFloat(document.getElementById('pBarre').value)||0;
+  const p=parseFloat(document.getElementById('pPromo').value)||0;
+  const el=document.getElementById('apercuRemise');
+  const v=document.getElementById('valRemise');
+  if(b>0&&p>0){ v.textContent=`−${remise(b,p)}% (économie de ${fPrix(b-p)})`; el.classList.add('visible'); }
+  else el.classList.remove('visible');
+}
+
+function reinitForm(){
+  document.getElementById('formProduit').reset();
+  document.getElementById('editId').value='';
+  document.getElementById('btnSave').textContent='Enregistrer le pack';
+  document.getElementById('apercuRemise').classList.remove('visible');
+  supprimerImageForm();
+}
+
+/* Prévisualisation de l'image uploadée — conversion en base64 pour stockage localStorage */
+function previsualiserImage(input){
+  const file=input.files[0];
+  if(!file) return;
+  if(file.size > 2*1024*1024){
+    toast('⚠️ Image trop lourde — max 2 Mo'); input.value=''; return;
+  }
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const data=e.target.result; // base64 data URL
+    document.getElementById('pImgData').value=data;
+    document.getElementById('imgPreview').src=data;
+    document.getElementById('imgPreviewWrap').classList.add('visible');
+    document.getElementById('imgUploadZone').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+/* Suppression de l'image dans le formulaire */
+function supprimerImageForm(){
+  document.getElementById('pImgData').value='';
+  document.getElementById('imgPreview').src='';
+  document.getElementById('imgPreviewWrap').classList.remove('visible');
+  document.getElementById('imgUploadZone').style.display='';
+  document.getElementById('pImgFile').value='';
+}
+
+async function sauvegarderProduit(e){
+  e.preventDefault();
+  const id=document.getElementById('editId').value;
+  const nom=document.getElementById('pNom').value.trim();
+  const cat=document.getElementById('pCat').value.trim();
+  const desc=document.getElementById('pDesc').value.trim();
+  const barre=parseFloat(document.getElementById('pBarre').value);
+  const promo=parseFloat(document.getElementById('pPromo').value);
+  const img=document.getElementById('pImgData').value||'';
+  if(!nom||!cat||!desc||!barre||!promo){ toast('⚠️ Remplissez tous les champs obligatoires'); return; }
+  if(promo>barre){ toast('⚠️ Le prix promo doit être inférieur au prix barré'); return; }
+  const EMOJIS={'Pack 20 000':'🥫','Pack 10 000':'🍚','Pack 25 000':'📦','Personnalisé':'✏️',"À l'unité":'🛒',Riz:'🍚',Conserves:'🥫',Sardines:'🐟',Huiles:'🛢️',Packs:'📦'};
+  const btnSave=document.getElementById('btnSave');
+  const labelOriginal=btnSave.textContent;
+  btnSave.disabled=true; btnSave.textContent='⏳ Enregistrement…';
+  try{
+    if(id){
+      await db.collection(PRODUITS_COL).doc(id).update({nom,cat,desc,barre,promo,img});
+      toast(`✅ "${nom}" mis à jour`);
+    } else {
+      const emoji=EMOJIS[cat]||'📦';
+      await db.collection(PRODUITS_COL).doc(genId()).set({nom,cat,desc,barre,promo,img,emoji});
+      toast(`✅ "${nom}" ajouté`);
+    }
+    reinitForm();
+  }catch(err){
+    console.error('Erreur sauvegarde produit :',err);
+    toast('⚠️ Échec de l\'enregistrement — vérifiez votre connexion');
+  }
+  btnSave.disabled=false; btnSave.textContent=labelOriginal;
+  // La grille et le tableau admin se mettent à jour automatiquement via l'écoute temps réel Firestore
+}
+
+function chargerDansForm(id){
+  const p=E.produits.find(x=>x.id===id); if(!p)return;
+  document.getElementById('editId').value=p.id;
+  document.getElementById('pNom').value=p.nom;
+  document.getElementById('pCat').value=p.cat;
+  document.getElementById('pDesc').value=p.desc;
+  document.getElementById('pBarre').value=p.barre;
+  document.getElementById('pPromo').value=p.promo;
+  // Recharger l'image dans le preview si elle existe
+  document.getElementById('pImgData').value=p.img||'';
+  if(p.img){
+    document.getElementById('imgPreview').src=p.img;
+    document.getElementById('imgPreviewWrap').classList.add('visible');
+    document.getElementById('imgUploadZone').style.display='none';
+  } else {
+    supprimerImageForm();
+  }
+  document.getElementById('btnSave').textContent='💾 Mettre à jour';
+  majApercuRemise();
+  // Basculer sur l'onglet ajout
+  document.querySelectorAll('.onglet').forEach(x=>x.classList.remove('actif'));
+  document.querySelectorAll('.tab-contenu').forEach(x=>x.classList.remove('actif'));
+  document.querySelector('[data-tab="tabAjout"]').classList.add('actif');
+  document.getElementById('tabAjout').classList.add('actif');
+}
+
+async function supprimerProduit(id){
+  const p=E.produits.find(x=>x.id===id); if(!p)return;
+  if(!confirm(`Supprimer "${p.nom}" ?\nAction irréversible.`))return;
+  try{
+    await db.collection(PRODUITS_COL).doc(id).delete();
+    toast(`🗑 "${p.nom}" supprimé`);
+  }catch(err){
+    console.error('Erreur suppression produit :',err);
+    toast('⚠️ Échec de la suppression — vérifiez votre connexion');
+  }
+  // La grille et le tableau admin se mettent à jour automatiquement via l'écoute temps réel Firestore
+}
+
+function rendreTablAdmin(filtre=''){
+  const tbody=document.getElementById('tblBody');
+  const vide=document.getElementById('adminVide');
+  const liste=filtre?E.produits.filter(p=>p.nom.toLowerCase().includes(filtre.toLowerCase())||p.cat.toLowerCase().includes(filtre.toLowerCase())):E.produits;
+  tbody.innerHTML='';
+  if(!liste.length){ vide.style.display='block'; return; }
+  vide.style.display='none';
+  liste.forEach(p=>{
+    const r=remise(p.barre,p.promo);
+    const imgCell=p.img?`<img src="${p.img}" class="tbl-thumb" alt="${p.nom}" />`:`<div class="tbl-thumb-ph">${p.emoji||'📦'}</div>`;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td>${imgCell}</td>
+      <td><strong>${p.nom}</strong></td>
+      <td>${p.cat}</td>
+      <td>${fPrix(p.barre)}</td>
+      <td style="color:var(--vert);font-weight:700">${fPrix(p.promo)}</td>
+      <td>${r>0?`<span class="badge-tbl">-${r}%</span>`:'—'}</td>
+      <td>
+        <button class="btn-edit" onclick="chargerDansForm('${p.id}')">✏️ Modifier</button>
+        <button class="btn-del" onclick="supprimerProduit('${p.id}')">🗑 Supprimer</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ─────────────────────────────────────────────
+   10. UI
+───────────────────────────────────────────── */
+function toggleMenu(){
+  const h=document.getElementById('hamburger');
+  const m=document.getElementById('menuMobile');
+  h.classList.toggle('ouvert');
+  m.classList.toggle('ouvert');
+}
+function fermerMenu(){
+  document.getElementById('hamburger').classList.remove('ouvert');
+  document.getElementById('menuMobile').classList.remove('ouvert');
+}
+
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  document.getElementById('navbar').classList.toggle('ombre',y>60);
+  const st=document.getElementById('scrollTop');
+  st.classList.toggle('visible',y>400);
+},{passive:true});
+
+document.getElementById('formContact').addEventListener('submit',e=>{
+  e.preventDefault();
+  const n=document.getElementById('cNom').value.trim();
+  const t=document.getElementById('cTel').value.trim();
+  const m=document.getElementById('cMsg').value.trim();
+  if(!n||!t||!m){ toast('⚠️ Remplissez tous les champs'); return; }
+  toast(`✅ Message envoyé ! On vous rappelle bientôt, ${n}.`);
+  e.target.reset();
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ fermerPanier(); fermerAdmin(); fermerCommande(); }
+});
+
+// Spinners pour le bouton payer
+const style=document.createElement('style');
+style.textContent='@keyframes spin{to{transform:rotate(360deg)}}';
+document.head.appendChild(style);
+
+/* ─────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded',()=>{
+  chargerProduits(); // Charge + écoute le catalogue en temps réel depuis Firestore (voir section 3)
+  chargerPanier();
+  majBadge();
+  rendrePanier();
+  document.getElementById('annee').textContent=new Date().getFullYear();
+  afficherConfirmation(); // Vérifie si on revient d'un paiement FedaPay
+
+  /* ── Déclencheur admin secret : appui long (800ms) sur le @ du footer ── */
+  const trigger=document.getElementById('adminTrigger');
+  let timerAdmin=null;
+  let adminBarFill=null;
+
+  function startLongPress(){
+    // Créer une mini barre de progression visuelle discrète sous le footer
+    if(!adminBarFill){
+      const bar=document.createElement('div');
+      bar.id='adminBar';
+      bar.style.cssText='position:fixed;bottom:0;left:0;height:2px;background:var(--vert-clair);width:0;z-index:9998;transition:width 0.8s linear;';
+      document.body.appendChild(bar);
+      adminBarFill=bar;
+    }
+    adminBarFill.style.transition='none'; adminBarFill.style.width='0';
+    requestAnimationFrame(()=>{
+      adminBarFill.style.transition='width 0.8s linear';
+      adminBarFill.style.width='100%';
+    });
+    timerAdmin=setTimeout(()=>{
+      ouvrirAdmin();
+      adminBarFill.style.width='0';
+    }, 800);
+  }
+
+  function cancelLongPress(){
+    clearTimeout(timerAdmin);
+    if(adminBarFill){ adminBarFill.style.transition='none'; adminBarFill.style.width='0'; }
+  }
+
+  // Événements tactiles (mobile)
+  trigger.addEventListener('touchstart', (e)=>{ e.preventDefault(); startLongPress(); }, {passive:false});
+  trigger.addEventListener('touchend',   cancelLongPress);
+  trigger.addEventListener('touchmove',  cancelLongPress);
+  // Événements souris (desktop)
+  trigger.addEventListener('mousedown',  startLongPress);
+  trigger.addEventListener('mouseup',    cancelLongPress);
+  trigger.addEventListener('mouseleave', cancelLongPress);
+});
+</script>
+</body>
+</html>
