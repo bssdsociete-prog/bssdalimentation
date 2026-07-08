@@ -1090,14 +1090,26 @@ function chargerProduits(){
       return; // onSnapshot va se redéclencher automatiquement avec les données créées
     }
     produitsPretUneFois=true;
-    E.produits=snap.docs.map(d=>({id:d.id,...d.data()}));
+    E.produits=trierProduits(snap.docs.map(d=>({id:d.id,...d.data()})));
     initBoutique();
     if(E.adminOk) rendreTablAdmin(document.getElementById('recherche')?.value||'');
   }, (err)=>{
     console.error('Erreur Firestore (produits) :',err);
     toast('⚠️ Connexion au catalogue impossible — vérifiez votre connexion internet');
-    E.produits=[...PRODUITS_DEFAUT];
+    E.produits=trierProduits([...PRODUITS_DEFAUT]);
     initBoutique();
+  });
+}
+/* Les 3 packs vedettes restent toujours en tête de liste, dans cet ordre précis,
+   même si de nouveaux produits sont ajoutés ensuite depuis l'admin. Tout le reste
+   suit derrière, dans son ordre d'origine (tri stable). */
+const PACKS_VEDETTES=['Pack 10 000','Pack 20 000','Pack 25 000'];
+function trierProduits(liste){
+  return [...liste].sort((a,b)=>{
+    const ia=PACKS_VEDETTES.indexOf(a.cat), ib=PACKS_VEDETTES.indexOf(b.cat);
+    const pa=ia===-1?PACKS_VEDETTES.length:ia;
+    const pb=ib===-1?PACKS_VEDETTES.length:ib;
+    return pa-pb;
   });
 }
 function chargerPanier(){
@@ -1371,17 +1383,19 @@ async function lancerPaiement(){
   bp.disabled=true;
   bp.innerHTML='<span style="display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite"></span> Ouverture du paiement…';
 
-  // Filet de sécurité : si la fenêtre FedaPay n'apparaît pas dans les 6 secondes
-  // (ex : domaine non autorisé sur le compte FedaPay -> échec silencieux),
-  // on réactive le bouton et on affiche un message clair au lieu de laisser
-  // tourner l'animation indéfiniment.
+  // Filet de sécurité : si la fenêtre FedaPay n'apparaît pas dans les 15 secondes
+  // (ex : domaine non autorisé sur le compte FedaPay -> échec silencieux, ou réseau
+  // lent), on réactive le bouton et on affiche un message clair au lieu de laisser
+  // tourner l'animation indéfiniment. 15s (plutôt que 6s) pour éviter les fausses
+  // alertes sur une connexion plus lente, la fenêtre pouvant parfois mettre du temps
+  // à s'afficher sans que ce soit un vrai blocage.
   const securiteTimeout=setTimeout(()=>{
     if(bp.disabled){
       bp.disabled=false; majRecap();
       errMsg.textContent="La fenêtre de paiement n'a pas pu s'ouvrir. Vérifiez que ce domaine est bien autorisé dans votre compte FedaPay (Paramètres → Domaines), puis réessayez.";
       errBloc.classList.add('visible');
     }
-  },6000);
+  },15000);
 
   try{
     const widget=FedaPay.init({
