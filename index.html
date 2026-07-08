@@ -308,6 +308,8 @@ ul{list-style:none}
 .tbl th{background:var(--vert);color:var(--blanc);text-align:left;padding:11px 13px;font-weight:600;white-space:nowrap}
 .tbl td{padding:9px 13px;border-bottom:1px solid var(--bordure);vertical-align:middle}
 .tbl tr:hover td{background:var(--ivoire)}
+.btn-lien{background:none;border:1.5px solid var(--vert);color:var(--vert);border-radius:var(--r-full);padding:5px 14px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all var(--tr)}
+.btn-lien:hover{background:var(--vert);color:var(--blanc)}
 .tbl-thumb{width:44px;height:44px;border-radius:var(--r-sm);object-fit:cover;background:var(--vert-pale)}
 .tbl-thumb-ph{width:44px;height:44px;background:var(--vert-pale);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:1.4rem}
 .badge-tbl{display:inline-block;background:var(--orange);color:var(--blanc);font-weight:800;font-size:.7rem;padding:2px 7px;border-radius:var(--r-full)}
@@ -699,6 +701,7 @@ ul{list-style:none}
     <div class="onglets">
       <button class="onglet actif" data-tab="tabAjout">➕ Ajouter un pack</button>
       <button class="onglet" data-tab="tabGerer">📋 Gérer les packs</button>
+      <button class="onglet" data-tab="tabCommandes">📦 Commandes</button>
       <button class="onglet" data-tab="tabPaiement">🔑 Paiement</button>
     </div>
 
@@ -765,6 +768,18 @@ ul{list-style:none}
         </table>
       </div>
       <p class="etat-vide" id="adminVide" style="display:none">Aucun pack enregistré.</p>
+    </div>
+
+    <!-- TAB Commandes -->
+    <div class="tab-contenu" id="tabCommandes">
+      <div class="admin-recherche"><input type="search" id="rechercheCmd" placeholder="🔍 Rechercher par nom ou téléphone…" oninput="rendreCommandes(this.value)" /></div>
+      <div class="tbl-wrapper">
+        <table class="tbl" id="tblCommandes">
+          <thead><tr><th>Date</th><th>Client</th><th>Téléphone</th><th>Livraison</th><th>Montant</th><th>Statut</th><th>Détails</th></tr></thead>
+          <tbody id="tblCommandesBody"></tbody>
+        </table>
+      </div>
+      <p class="etat-vide" id="commandesVide" style="display:none">Aucune commande pour le moment.</p>
     </div>
 
     <!-- TAB Paiement (configuration FedaPay) -->
@@ -987,12 +1002,11 @@ async function sauvegarderConfigFedaPay(){
     btn.disabled=false; btn.textContent='💾 Enregistrer';
   }
 }
-function chargerFedaPay(){ return chargerScript('https://cdn.fedapay.com/checkout.js?v=1.1.7'); }
-/* On précharge FedaPay dès que le navigateur est inactif (après l'affichage du
-   catalogue), pour qu'il soit déjà prêt quand le client arrive au paiement —
-   sans jamais retarder l'affichage initial de la boutique. */
-if('requestIdleCallback' in window){ requestIdleCallback(()=>chargerFedaPay().catch(()=>{})); }
-else{ setTimeout(()=>chargerFedaPay().catch(()=>{}), 3000); }
+/* Note : le widget Checkout.js (chargé auparavant ici) n'est plus utilisé — le
+   paiement passe désormais par une redirection complète générée côté serveur
+   (/api/creer-paiement.js), qui évite les soucis de cookies tiers/iframe. La clé
+   publique ci-dessus n'est donc plus utilisée par le paiement lui-même ; seule la
+   clé secrète (variable d'environnement FEDAPAY_SECRET_KEY sur Vercel) l'est. */
 </script>
 <script>
 /* ══════════════════════════════════════════════════════════════
@@ -1069,6 +1083,7 @@ const E = {
   panier:   [],
   catActive:'all',
   adminOk:  false,
+  commandes:[],
 };
 const LS_PANIER = 'fp_panier';
 
@@ -1349,143 +1364,98 @@ async function lancerPaiement(){
   if(!adresse&&livrSelected()!=='retrait'){ toast('⚠️ Entrez votre adresse'); return; }
   if(!E.panier.length){ toast('⚠️ Votre panier est vide'); return; }
 
-  // Vérif : une clé FedaPay a-t-elle été configurée (onglet admin "🔑 Paiement") ?
-  if(!FEDAPAY_CONFIG.publicKey){
-    errMsg.textContent="Le paiement en ligne n'est pas encore configuré. Contactez l'administrateur du site.";
-    errBloc.classList.add('visible');
-    return;
-  }
-
   const montant=Math.round(sousTotal()+fraisLivr());
   // FedaPay exige un email client — on en génère un si le client n'en a pas fourni
   const emailClient=email || `client${phone.replace(/[^0-9]/g,'')}@bssd-alimentation.bj`;
-  // FedaPay attend le numéro LOCAL (8 chiffres pour le Bénin) séparément de l'indicatif
-  // pays (déjà précisé via country:'BJ' juste en dessous). Si on envoie "+229 01 94 17 36 08"
-  // tel quel EN PLUS de country:'BJ', l'indicatif est dupliqué et la demande de paiement
-  // n'atteint jamais réellement l'opérateur Mobile Money — la transaction reste alors
-  // bloquée en "En attente" pour toujours côté FedaPay, sans aucune erreur visible ici.
-  let phoneLocal=phone.replace(/[^0-9]/g,'');
-  if(phoneLocal.startsWith('229')) phoneLocal=phoneLocal.slice(3);
-
-  // Vérif : le script FedaPay (checkout.js) s'est-il bien chargé ?
-  // Il est normalement déjà préchargé en arrière-plan (voir chargerFedaPay), mais
-  // si ce n'est pas encore le cas (réseau lent), on tente de le charger ici avant
-  // d'abandonner — pour ne bloquer le client que si le CDN est vraiment inaccessible.
-  if(typeof FedaPay === 'undefined'){
-    try{ await chargerFedaPay(); }catch(e){}
-  }
-  if(typeof FedaPay === 'undefined'){
-    errMsg.textContent="Le module de paiement n'a pas pu se charger (connexion internet, bloqueur de publicités, ou domaine non autorisé chez FedaPay). Réessayez ou contactez-nous.";
-    errBloc.classList.add('visible');
-    return;
-  }
 
   bp.disabled=true;
-  bp.innerHTML='<span style="display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite"></span> Ouverture du paiement…';
-
-  // Filet de sécurité : si la fenêtre FedaPay n'apparaît pas dans les 15 secondes
-  // (ex : domaine non autorisé sur le compte FedaPay -> échec silencieux, ou réseau
-  // lent), on réactive le bouton et on affiche un message clair au lieu de laisser
-  // tourner l'animation indéfiniment. 15s (plutôt que 6s) pour éviter les fausses
-  // alertes sur une connexion plus lente, la fenêtre pouvant parfois mettre du temps
-  // à s'afficher sans que ce soit un vrai blocage.
-  const securiteTimeout=setTimeout(()=>{
-    if(bp.disabled){
-      bp.disabled=false; majRecap();
-      errMsg.textContent="La fenêtre de paiement n'a pas pu s'ouvrir. Vérifiez que ce domaine est bien autorisé dans votre compte FedaPay (Paramètres → Domaines), puis réessayez.";
-      errBloc.classList.add('visible');
-    }
-  },15000);
+  bp.innerHTML='<span style="display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite"></span> Redirection vers le paiement…';
 
   try{
-    const widget=FedaPay.init({
-      public_key: FEDAPAY_CONFIG.publicKey,
-      environment: FEDAPAY_CONFIG.environment,
-      transaction:{
-        amount: montant,
-        description: `Commande BSSD Alimentation — ${E.panier.reduce((s,i)=>s+i.qte,0)} article(s)`
-      },
-      currency:{ iso:'XOF' },
-      customer:{
-        email: emailClient,
-        firstname: prenom,
-        lastname: nom,
-        phone_number:{ number: phoneLocal, country:'BJ' }
-      },
-      onComplete: async (resp)=>{
-        clearTimeout(securiteTimeout);
-        const FP=window['FedaPay'];
-        bp.disabled=false; majRecap();
-        if(resp.reason===FP.DIALOG_DISMISSED){
-          return; // Le client a fermé la fenêtre de paiement — panier conservé, rien d'autre à faire
-        }
-        const transaction=resp.transaction;
-        if(transaction && transaction.status==='approved'){
-          await enregistrerCommande({transaction,prenom,nom,phone,email:emailClient,adresse,ville,notes,montant});
-          fermerCommande();
-          afficherConfirmation('approved', transaction.id);
-        } else {
-          afficherConfirmation('echec', transaction?transaction.id:null);
-        }
-      }
+    // On demande à notre fonction serveur (avec la clé secrète FedaPay) de créer
+    // la transaction et de générer un lien de paiement. On redirige ensuite le
+    // client en pleine page vers ce lien — plus d'iframe, donc plus de blocage
+    // de cookies tiers par le navigateur.
+    const r=await fetch('/api/creer-paiement',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        montant,
+        description:`Commande BSSD Alimentation — ${E.panier.reduce((s,i)=>s+i.qte,0)} article(s)`,
+        prenom, nom, email: emailClient, phone,
+        callbackUrl: `${location.origin}/`
+      })
     });
-    widget.open();
-  }catch(err){
-    clearTimeout(securiteTimeout);
-    console.error('Erreur FedaPay :',err);
-    errMsg.textContent='Erreur lors de l\'ouverture du paiement. Réessayez.';
-    errBloc.classList.add('visible');
-    bp.disabled=false; majRecap();
-  }
-}
+    const data=await r.json();
+    if(!r.ok || !data.url) throw new Error(data.error || 'Échec de la création du paiement');
 
-/* Enregistre la commande payée dans Firestore pour que vous puissiez la consulter
-   depuis la console Firebase (onglet Firestore Database → collection "commandes").
-   On ne garde pas l'image (base64) de chaque article : elle est déjà dans la fiche
-   produit et alourdirait inutilement le document, avec un risque de dépasser la
-   limite Firestore juste après un paiement déjà encaissé. */
-async function enregistrerCommande({transaction,prenom,nom,phone,email,adresse,ville,notes,montant}){
-  try{
+    // On garde les infos de la commande le temps de la redirection (perdues sinon,
+    // puisque la page est entièrement rechargée au retour de FedaPay).
     const articlesLeger=E.panier.map(({id,nom,promo,qte,emoji})=>({id,nom,promo,qte,emoji}));
-    // On utilise l'ID de transaction FedaPay comme ID de document Firestore.
-    // Ainsi, si le webhook serveur (/api/fedapay-webhook.js) écrit aussi sur cette
-    // commande, il complète le même document au lieu d'en créer un doublon.
-    await db.collection('commandes').doc(String(transaction.id)).set({
-      transactionId: transaction.id,
-      statut: transaction.status,
-      client:{ prenom, nom, phone, email },
-      livraison:{ mode: livrSelected(), adresse, ville, notes, frais: fraisLivr() },
-      paiement: pmtSelected(),
-      articles: articlesLeger,
-      montant,
-      confirmeParWebhook: false,
-      dateCreation: firebase.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
+    localStorage.setItem('fp_commande_encours', JSON.stringify({
+      transactionId:data.transactionId, prenom, nom, phone, email:emailClient,
+      adresse, ville, notes, montant, frais:fraisLivr(), mode:livrSelected(),
+      paiement:pmtSelected(), articles:articlesLeger
+    }));
+
+    window.location.href=data.url; // Redirection complète vers la vraie page FedaPay
   }catch(err){
-    console.error('Erreur enregistrement commande Firestore :',err);
-    // Le paiement a déjà réussi — on ne bloque pas le client pour cette erreur secondaire
+    console.error('Erreur lancement paiement :',err);
+    bp.disabled=false; majRecap();
+    errMsg.textContent=err.message || "Impossible de démarrer le paiement. Vérifiez votre connexion et réessayez.";
+    errBloc.classList.add('visible');
   }
 }
 
 /* ─────────────────────────────────────────────
-   8. PAGE CONFIRMATION
+   8. PAGE CONFIRMATION (retour de paiement FedaPay)
 ───────────────────────────────────────────── */
 function genNumCmd(id){ if(id) return `BSSD-${id}`; const n=new Date(); return `BSSD-${n.getFullYear()}${String(n.getMonth()+1).padStart(2,'0')}${String(n.getDate()).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`; }
 
-function afficherConfirmation(statusForce, transactionId){
+async function afficherConfirmation(){
   const params=new URLSearchParams(window.location.search);
-  const status=statusForce || params.get('status');
+  const status=params.get('status');
+  const id=params.get('id');
   const page=document.getElementById('pageConfirm');
   const card=document.getElementById('confirmCard');
-  if(!status)return; // Pas de statut → page normale
+  if(!status)return; // Pas de retour de paiement → page normale
+  history.replaceState({}, '', window.location.pathname); // nettoie l'URL
   page.classList.add('visible');
   document.body.style.overflow='hidden';
+
+  // Retrouve les infos de la commande sauvegardées juste avant la redirection.
+  // ⚠️ Le statut renvoyé dans l'URL n'est indicatif que pour l'affichage immédiat —
+  // pour une vérification fiable à 100% (recommandation FedaPay), il faudrait un
+  // webhook serveur qui interroge l'API avec la clé secrète. À ajouter plus tard
+  // si besoin (/api/fedapay-webhook.js) pour se protéger d'une URL falsifiée.
+  let infos=null;
+  try{ infos=JSON.parse(localStorage.getItem('fp_commande_encours')||'null'); }catch(e){}
+  if(infos && String(infos.transactionId)===String(id)){
+    try{
+      await db.collection('commandes').doc(String(id)).set({
+        transactionId:id, statut:status,
+        client:{ prenom:infos.prenom, nom:infos.nom, phone:infos.phone, email:infos.email },
+        livraison:{ mode:infos.mode, adresse:infos.adresse, ville:infos.ville, notes:infos.notes, frais:infos.frais },
+        paiement:infos.paiement,
+        articles:infos.articles,
+        montant:infos.montant,
+        dateCreation: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge:true });
+      if(status==='approved'){
+        fetch('/api/notifier-commande',{
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ transactionId:id, prenom:infos.prenom, nom:infos.nom, phone:infos.phone, email:infos.email, adresse:infos.adresse, ville:infos.ville, notes:infos.notes, montant:infos.montant, mode:infos.mode, articles:infos.articles })
+        }).catch(err=>console.error('Erreur notification email commande :',err));
+      }
+    }catch(err){ console.error('Erreur enregistrement commande Firestore :',err); }
+    localStorage.removeItem('fp_commande_encours');
+  }
 
   if(status==='approved'){
     const panier=[...E.panier];
     const tot=sousTotal();
     const lignes=panier.map(i=>`<div class="confirm-ligne"><span>${i.nom} ×${i.qte}</span><span>${fPrix(i.promo*i.qte)}</span></div>`).join('');
-    const num=genNumCmd(transactionId);
+    const num=genNumCmd(id);
     card.innerHTML=`
       <span class="confirm-icone">✅</span>
       <h1 class="confirm-titre">Commande confirmée !</h1>
@@ -1566,6 +1536,70 @@ function afficherDash(){
   rendreTablAdmin();
   document.getElementById('cfgEnv').value=FEDAPAY_CONFIG.environment;
   document.getElementById('cfgCle').value=FEDAPAY_CONFIG.publicKey;
+  chargerCommandes();
+}
+
+/* Commandes — chargées uniquement après connexion admin (les règles Firestore
+   n'autorisent de toute façon la lecture qu'au compte admin). Écoute en temps
+   réel : une nouvelle commande apparaît instantanément sans recharger la page. */
+let commandesEcouteur=null;
+function chargerCommandes(){
+  if(commandesEcouteur) return; // déjà en écoute, pas besoin de redémarrer
+  commandesEcouteur=db.collection('commandes').orderBy('dateCreation','desc').onSnapshot(snap=>{
+    E.commandes=snap.docs.map(d=>({id:d.id,...d.data()}));
+    rendreCommandes(document.getElementById('rechercheCmd')?.value||'');
+  }, err=>{
+    console.error('Erreur lecture commandes :',err);
+    toast('⚠️ Impossible de charger les commandes');
+  });
+}
+const STATUT_LABEL={ approved:'✅ Approuvée', pending:'⏳ En attente', declined:'❌ Refusée', canceled:'✖️ Annulée' };
+function rendreCommandes(filtre=''){
+  const tbody=document.getElementById('tblCommandesBody');
+  const vide=document.getElementById('commandesVide');
+  if(!tbody) return;
+  const f=filtre.trim().toLowerCase();
+  let liste=E.commandes||[];
+  if(f) liste=liste.filter(c=>{
+    const nomComplet=`${c.client?.prenom||''} ${c.client?.nom||''}`.toLowerCase();
+    return nomComplet.includes(f) || (c.client?.phone||'').toLowerCase().includes(f);
+  });
+  if(!liste.length){ tbody.innerHTML=''; vide.style.display='block'; return; }
+  vide.style.display='none';
+  tbody.innerHTML=liste.map(c=>{
+    const date=c.dateCreation?.toDate?c.dateCreation.toDate():null;
+    const dateStr=date?date.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+    const nomComplet=`${c.client?.prenom||''} ${c.client?.nom||''}`.trim()||'—';
+    const livrLabel=c.livraison?.mode==='retrait'?'Retrait sur place':`${c.livraison?.mode||'—'} — ${c.livraison?.ville||''}`;
+    const statutTxt=STATUT_LABEL[c.statut]||c.statut||'—';
+    const idSafe=String(c.id).replace(/'/g,"\\'");
+    return `<tr>
+      <td>${dateStr}</td>
+      <td>${nomComplet}</td>
+      <td>${c.client?.phone||'—'}</td>
+      <td>${livrLabel}</td>
+      <td>${fPrix(c.montant||0)}</td>
+      <td>${statutTxt}</td>
+      <td><button type="button" class="btn-lien" onclick="afficherDetailsCommande('${idSafe}')">Voir</button></td>
+    </tr>`;
+  }).join('');
+}
+function afficherDetailsCommande(id){
+  const c=(E.commandes||[]).find(x=>String(x.id)===String(id)); if(!c)return;
+  const articles=(c.articles||[]).map(a=>`• ${a.qte}× ${a.nom} — ${fPrix(a.promo)}`).join('\n');
+  const msg=`Commande ${c.id}
+Client : ${c.client?.prenom||''} ${c.client?.nom||''}
+Téléphone : ${c.client?.phone||'—'}
+Email : ${c.client?.email||'—'}
+Livraison : ${c.livraison?.mode||'—'}${c.livraison?.adresse?(' — '+c.livraison.adresse):''}${c.livraison?.ville?(', '+c.livraison.ville):''}
+Notes : ${c.livraison?.notes||'—'}
+Paiement : ${c.paiement||'—'}
+Montant : ${fPrix(c.montant||0)}
+Statut : ${STATUT_LABEL[c.statut]||c.statut}
+
+Articles :
+${articles||'—'}`;
+  alert(msg);
 }
 
 // Onglets admin
