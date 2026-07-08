@@ -281,7 +281,7 @@ ul{list-style:none}
 
 /* Modal détail produit */
 .modal-produit{width:min(880px,95vw);padding:0}
-.btn-fermer-produit{position:absolute;top:16px;right:16px;z-index:5;width:38px;height:38px;background:rgba(255,255,255,.9);border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.14);font-size:1rem}
+.btn-fermer-produit{position:absolute;top:16px;left:16px;z-index:5;width:38px;height:38px;background:rgba(255,255,255,.9);border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.14);font-size:1rem}
 .dp-corps{display:flex;flex-direction:column}
 .dp-img{position:relative;width:100%;aspect-ratio:4/3;background:var(--ivoire);display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:var(--r-xl) var(--r-xl) 0 0}
 .dp-img img{width:100%;height:100%;object-fit:cover}
@@ -1599,7 +1599,16 @@ async function connexionAdmin(){
     E.adminOk=true; err.classList.remove('visible'); afficherDash();
   }catch(e){
     console.error('Erreur connexion admin :',e);
-    err.textContent='Mot de passe incorrect.';
+    const MESSAGES_ERREUR={
+      'auth/wrong-password':'Mot de passe incorrect.',
+      'auth/invalid-credential':'Mot de passe incorrect.',
+      'auth/invalid-login-credentials':'Mot de passe incorrect.',
+      'auth/user-not-found':'Compte administrateur introuvable — contactez le développeur.',
+      'auth/too-many-requests':'Trop de tentatives de connexion — attendez quelques minutes avant de réessayer.',
+      'auth/network-request-failed':'Problème de connexion internet — vérifiez votre réseau et réessayez.',
+      'auth/user-disabled':'Ce compte administrateur a été désactivé.'
+    };
+    err.textContent = MESSAGES_ERREUR[e.code] || `Erreur de connexion (${e.code||e.message}). Réessayez ou contactez le développeur.`;
     err.classList.add('visible');
     document.getElementById('mdpAdmin').value='';
   }finally{
