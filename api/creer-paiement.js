@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { montant, description, prenom, nom, email, phone, callbackUrl } = req.body || {};
+    const { montant, description, prenom, nom, email, phone, callbackUrl, adresse, ville, notes, mode, articles } = req.body || {};
     if (!montant || !phone) {
       return res.status(400).json({ error: 'Données de paiement incomplètes' });
     }
@@ -37,6 +37,17 @@ export default async function handler(req, res) {
     let phoneLocal = String(phone).replace(/[^0-9]/g, '');
     if (phoneLocal.startsWith('229')) phoneLocal = phoneLocal.slice(3);
 
+    // On glisse toutes les infos de la commande dans les métadonnées personnalisées
+    // de la transaction. FedaPay nous les renverra telles quelles dans le webhook
+    // (/api/fedapay-webhook.js) — ainsi, la commande peut être enregistrée et l'email
+    // envoyé de façon fiable, même si le client ferme son navigateur ou change
+    // d'appareil pendant le paiement Mobile Money.
+    const customMetadata = {
+      prenom: prenom || '', nom: nom || '', phone: phone || '', email: email || '',
+      adresse: adresse || '', ville: ville || '', notes: notes || '', mode: mode || '',
+      articles: JSON.stringify(articles || [])
+    };
+
     // 1. Création de la transaction
     const createRes = await fetch(`${apiBase}/transactions`, {
       method: 'POST',
@@ -49,6 +60,7 @@ export default async function handler(req, res) {
         description: description || 'Commande BSSD Alimentation',
         currency: { iso: 'XOF' },
         callback_url: callbackUrl,
+        custom_metadata: customMetadata,
         customer: {
           firstname: prenom || 'Client',
           lastname: nom || 'BSSD',
