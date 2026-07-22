@@ -976,7 +976,7 @@ db.enablePersistence({synchronizeTabs:true}).catch(err=>{
    (ajouter/modifier/supprimer des produits). La lecture reste publique pour tous,
    sans authentification nécessaire — aucune connexion automatique n'a lieu au
    chargement de la page. */
-const ADMIN_EMAIL = 'admin@bssd-alimentation.bj';
+const ADMIN_EMAIL = 'bssdsociete@gmail.com';
 
 /* ── Chargement à la demande (lazy-load) ──
    Auth n'est requis que si on ouvre le panneau admin ; FedaPay ne l'est que si
@@ -1473,7 +1473,11 @@ async function lancerPaiement(){
     // On demande à notre fonction serveur (avec la clé secrète FedaPay) de créer
     // la transaction et de générer un lien de paiement. On redirige ensuite le
     // client en pleine page vers ce lien — plus d'iframe, donc plus de blocage
-    // de cookies tiers par le navigateur.
+    // de cookies tiers par le navigateur. Les infos de commande (nom, adresse,
+    // articles…) partent avec la transaction elle-même (custom_metadata) : c'est
+    // FedaPay qui nous les renverra dans le webhook serveur au moment du paiement
+    // réel, donc plus besoin de les faire survivre dans le navigateur du client.
+    const articlesLeger=E.panier.map(({id,nom,promo,qte,emoji})=>({id,nom,promo,qte,emoji}));
     const r=await fetch('/api/creer-paiement',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -1481,20 +1485,16 @@ async function lancerPaiement(){
         montant,
         description:`Commande BSSD Alimentation — ${E.panier.reduce((s,i)=>s+i.qte,0)} article(s)`,
         prenom, nom, email: emailClient, phone,
+        adresse, ville, notes, mode: livrSelected(), articles: articlesLeger,
         callbackUrl: `${location.origin}/`
       })
     });
     const data=await r.json();
     if(!r.ok || !data.url) throw new Error(data.error || 'Échec de la création du paiement');
 
-    // On garde les infos de la commande le temps de la redirection (perdues sinon,
-    // puisque la page est entièrement rechargée au retour de FedaPay).
-    const articlesLeger=E.panier.map(({id,nom,promo,qte,emoji})=>({id,nom,promo,qte,emoji}));
-    localStorage.setItem('fp_commande_encours', JSON.stringify({
-      transactionId:data.transactionId, prenom, nom, phone, email:emailClient,
-      adresse, ville, notes, montant, frais:fraisLivr(), mode:livrSelected(),
-      paiement:pmtSelected(), articles:articlesLeger
-    }));
+    // Uniquement pour l'affichage (ex: adresse de retrait) sur la page de retour —
+    // aucune donnée sensible, aucune conséquence si elle se perd ou est modifiée.
+    localStorage.setItem('fp_mode_livraison', livrSelected());
 
     window.location.href=data.url; // Redirection complète vers la vraie page FedaPay
   }catch(err){
@@ -1521,40 +1521,19 @@ async function afficherConfirmation(){
   page.classList.add('visible');
   document.body.style.overflow='hidden';
 
-  // Retrouve les infos de la commande sauvegardées juste avant la redirection.
-  // ⚠️ Le statut renvoyé dans l'URL n'est indicatif que pour l'affichage immédiat —
-  // pour une vérification fiable à 100% (recommandation FedaPay), il faudrait un
-  // webhook serveur qui interroge l'API avec la clé secrète. À ajouter plus tard
-  // si besoin (/api/fedapay-webhook.js) pour se protéger d'une URL falsifiée.
-  let infos=null;
-  try{ infos=JSON.parse(localStorage.getItem('fp_commande_encours')||'null'); }catch(e){}
-  if(infos && String(infos.transactionId)===String(id)){
-    try{
-      await db.collection('commandes').doc(String(id)).set({
-        transactionId:id, statut:status,
-        client:{ prenom:infos.prenom, nom:infos.nom, phone:infos.phone, email:infos.email },
-        livraison:{ mode:infos.mode, adresse:infos.adresse, ville:infos.ville, notes:infos.notes, frais:infos.frais },
-        paiement:infos.paiement,
-        articles:infos.articles,
-        montant:infos.montant,
-        dateCreation: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge:true });
-      if(status==='approved'){
-        fetch('/api/notifier-commande',{
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ transactionId:id, prenom:infos.prenom, nom:infos.nom, phone:infos.phone, email:infos.email, adresse:infos.adresse, ville:infos.ville, notes:infos.notes, montant:infos.montant, mode:infos.mode, articles:infos.articles })
-        }).catch(err=>console.error('Erreur notification email commande :',err));
-      }
-    }catch(err){ console.error('Erreur enregistrement commande Firestore :',err); }
-    localStorage.removeItem('fp_commande_encours');
-  }
+  // La commande elle-même est enregistrée de façon fiable et sécurisée par le
+  // webhook serveur (/api/fedapay-webhook.js), indépendamment de cette page —
+  // ici on ne fait qu'afficher un message adapté au client, sans jamais écrire
+  // dans Firestore depuis le navigateur (ce qui fermait une faille de sécurité).
+  const modeLivr=localStorage.getItem('fp_mode_livraison');
+  localStorage.removeItem('fp_mode_livraison');
 
   if(status==='approved'){
     const panier=[...E.panier];
     const tot=sousTotal();
     const lignes=panier.map(i=>`<div class="confirm-ligne"><span>${i.nom} ×${i.qte}</span><span>${fPrix(i.promo*i.qte)}</span></div>`).join('');
     const num=genNumCmd(id);
-    const noteRetrait=infos?.mode==='retrait'
+    const noteRetrait=modeLivr==='retrait'
       ?`<p style="background:var(--vert-pale);border-radius:var(--r-md);padding:14px 18px;margin-bottom:20px;font-size:.9rem"><strong>🏪 Retrait sur place :</strong> Abomey-Calavi, en face de l'Église Sainte Joséphine Bakhita</p>`
       :'';
     card.innerHTML=`
