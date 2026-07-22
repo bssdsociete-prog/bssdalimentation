@@ -879,8 +879,8 @@ ul{list-style:none}
         <div class="cmd-card">
           <h2>🚚 Mode de livraison</h2>
           <div class="options-livr">
-            <label class="opt-livr"><input type="radio" name="livr" value="cotonou" checked onchange="majRecap()" /><div class="opt-livr-label"><strong>🏙️ Livraison Cotonou (24–48h)</strong><small>Tous les quartiers de Cotonou</small></div><span class="opt-livr-prix" id="prixCotonou">1 000 FCFA</span></label>
-            <label class="opt-livr"><input type="radio" name="livr" value="calavi" onchange="majRecap()" /><div class="opt-livr-label"><strong>🏘️ Livraison Calavi (24–48h)</strong><small>Calavi, Abomey-Calavi et environs</small></div><span class="opt-livr-prix">1 500 FCFA</span></label>
+            <label class="opt-livr"><input type="radio" name="livr" value="cotonou" checked onchange="majRecap()" /><div class="opt-livr-label"><strong>🏙️ Livraison Cotonou (24–48h)</strong><small>Tous les quartiers de Cotonou</small></div><span class="opt-livr-prix" id="prixCotonou">1 500 FCFA</span></label>
+            <label class="opt-livr"><input type="radio" name="livr" value="calavi" onchange="majRecap()" /><div class="opt-livr-label"><strong>🏘️ Livraison Calavi (24–48h)</strong><small>Calavi, Abomey-Calavi et environs</small></div><span class="opt-livr-prix">1 000 FCFA</span></label>
             <label class="opt-livr"><input type="radio" name="livr" value="retrait" onchange="majRecap()" /><div class="opt-livr-label"><strong>🏪 Retrait sur place</strong><small>Abomey-Calavi, en face de l'Église Sainte Joséphine Bakhita</small></div><span class="opt-livr-prix gratuit">Gratuit</span></label>
           </div>
         </div>
@@ -1396,7 +1396,7 @@ function fermerPanier(){
 /* ─────────────────────────────────────────────
    7. PAGE COMMANDE
 ───────────────────────────────────────────── */
-const TARIFS={cotonou:1000, calavi:1500, retrait:0};
+const TARIFS={cotonou:1500, calavi:1000, retrait:0};
 
 function livrSelected(){ return document.querySelector('input[name="livr"]:checked')?.value||'cotonou'; }
 function pmtSelected(){  return document.querySelector('input[name="pmt"]:checked')?.value||'mobile_money'; }
