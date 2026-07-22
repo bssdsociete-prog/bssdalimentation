@@ -310,9 +310,11 @@ ul{list-style:none}
 .admin-dash{padding:20px 28px 32px;display:none}
 .admin-dash.visible{display:block}
 /* Onglets */
-.onglets{display:flex;gap:4px;margin-bottom:28px;border-bottom:2px solid var(--bordure)}
+.onglets{display:flex;gap:4px;margin-bottom:28px;border-bottom:2px solid var(--bordure);flex-wrap:wrap}
 .onglet{padding:9px 20px;font-weight:700;font-size:.85rem;color:var(--texte-doux);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;cursor:pointer;transition:all var(--tr);background:none;border-top:none;border-left:none;border-right:none}
 .onglet.actif{color:var(--vert);border-bottom-color:var(--vert-clair)}
+.onglet-deconnexion{margin-left:auto;color:#c0392b}
+.onglet-deconnexion:hover{color:#922b21}
 .tab-contenu{display:none}
 .tab-contenu.actif{display:block}
 /* Formulaire produit */
@@ -724,6 +726,7 @@ ul{list-style:none}
       <button class="onglet" data-tab="tabGerer">📋 Gérer les packs</button>
       <button class="onglet" data-tab="tabCommandes">📦 Commandes</button>
       <button class="onglet" data-tab="tabPaiement">🔑 Paiement</button>
+      <button class="onglet onglet-deconnexion" onclick="deconnexionAdmin()" type="button">🚪 Déconnexion</button>
     </div>
 
     <!-- TAB Ajout / Édition -->
@@ -878,7 +881,7 @@ ul{list-style:none}
           <div class="options-livr">
             <label class="opt-livr"><input type="radio" name="livr" value="cotonou" checked onchange="majRecap()" /><div class="opt-livr-label"><strong>🏙️ Livraison Cotonou (24–48h)</strong><small>Tous les quartiers de Cotonou</small></div><span class="opt-livr-prix" id="prixCotonou">1 000 FCFA</span></label>
             <label class="opt-livr"><input type="radio" name="livr" value="calavi" onchange="majRecap()" /><div class="opt-livr-label"><strong>🏘️ Livraison Calavi (24–48h)</strong><small>Calavi, Abomey-Calavi et environs</small></div><span class="opt-livr-prix">1 500 FCFA</span></label>
-            <label class="opt-livr"><input type="radio" name="livr" value="retrait" onchange="majRecap()" /><div class="opt-livr-label"><strong>🏪 Retrait sur place</strong><small>Disponible dès demain matin</small></div><span class="opt-livr-prix gratuit">Gratuit</span></label>
+            <label class="opt-livr"><input type="radio" name="livr" value="retrait" onchange="majRecap()" /><div class="opt-livr-label"><strong>🏪 Retrait sur place</strong><small>Abomey-Calavi, en face de l'Église Sainte Joséphine Bakhita</small></div><span class="opt-livr-prix gratuit">Gratuit</span></label>
           </div>
         </div>
         <!-- Paiement -->
@@ -1167,6 +1170,24 @@ function sauverPanier(){ localStorage.setItem(LS_PANIER,JSON.stringify(E.panier)
    4. UTILITAIRES
 ───────────────────────────────────────────── */
 function fPrix(n){ return n.toLocaleString('fr-FR')+' FCFA'; }
+/* Échappe le HTML dans les données saisies par les clients (nom, ville, notes…)
+   avant de les insérer dans innerHTML. Sans ça, un client malintentionné pourrait
+   saisir du code (ex: prénom = "<img src=x onerror=...>") qui s'exécuterait dans
+   le navigateur de l'admin en consultant l'onglet Commandes — une vraie faille XSS. */
+function echapperHTML(s){
+  const d=document.createElement('div');
+  d.textContent=String(s??'');
+  return d.innerHTML;
+}
+/* Échappe le HTML avant d'insérer des données saisies par un client (nom,
+   téléphone, ville...) dans le DOM via innerHTML — sans ça, un client mal
+   intentionné pourrait entrer du code HTML/JS dans le formulaire de commande
+   et l'exécuter dans le navigateur de l'administrateur quand il consulte
+   l'onglet "Commandes". Les données produits (admin uniquement) n'ont pas
+   besoin de cet échappement, mais tout ce qui vient d'un client, si. */
+function echapperHtml(s){
+  return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 function remise(b,p){ return b>0?Math.round(((b-p)/b)*100):0; }
 function genId(){ return 'p'+Date.now(); }
 function toast(msg,d=2800){
@@ -1533,11 +1554,15 @@ async function afficherConfirmation(){
     const tot=sousTotal();
     const lignes=panier.map(i=>`<div class="confirm-ligne"><span>${i.nom} ×${i.qte}</span><span>${fPrix(i.promo*i.qte)}</span></div>`).join('');
     const num=genNumCmd(id);
+    const noteRetrait=infos?.mode==='retrait'
+      ?`<p style="background:var(--vert-pale);border-radius:var(--r-md);padding:14px 18px;margin-bottom:20px;font-size:.9rem"><strong>🏪 Retrait sur place :</strong> Abomey-Calavi, en face de l'Église Sainte Joséphine Bakhita</p>`
+      :'';
     card.innerHTML=`
       <span class="confirm-icone">✅</span>
       <h1 class="confirm-titre">Commande confirmée !</h1>
       <p class="confirm-sub">Merci pour votre confiance. Votre paiement a bien été reçu.<br/>Vous allez recevoir une confirmation par SMS.</p>
       <span class="num-cmd">Commande n° ${num}</span>
+      ${noteRetrait}
       <div class="confirm-recap"><h3>📋 Votre commande</h3>${lignes}<div class="confirm-ligne" style="font-weight:800;color:var(--vert);font-size:1rem"><span>Total payé</span><span>${fPrix(tot)}</span></div></div>
       <div class="confirm-actions"><button class="btn btn-vert" onclick="fermerConfirmation()">🛍 Continuer mes achats</button></div>
       <div class="redirect-bar">Retour automatique dans <strong id="cpt">10</strong>s<div class="progress"><div class="progress-fill" id="pfill"></div></div></div>`;
@@ -1585,6 +1610,20 @@ function fermerAdmin(){
   document.getElementById('modalOverlay').classList.remove('ouvert');
   document.getElementById('modalAdmin').classList.remove('ouvert');
   document.body.style.overflow='';
+}
+
+async function deconnexionAdmin(){
+  try{
+    if(typeof firebase!=='undefined' && firebase.auth){ await firebase.auth().signOut(); }
+  }catch(e){ console.error('Erreur déconnexion :',e); }
+  E.adminOk=false;
+  // On coupe l'écoute des commandes — plus aucune lecture pour ce compte une fois déconnecté
+  if(commandesEcouteur){ commandesEcouteur(); commandesEcouteur=null; }
+  document.getElementById('adminDash').classList.remove('visible');
+  document.getElementById('adminAuth').style.display='';
+  document.getElementById('mdpAdmin').value='';
+  document.getElementById('authErr').classList.remove('visible');
+  toast('👋 Déconnecté(e) de l\'admin');
 }
 
 async function connexionAdmin(){
@@ -1655,14 +1694,14 @@ function rendreCommandes(filtre=''){
   tbody.innerHTML=liste.map(c=>{
     const date=c.dateCreation?.toDate?c.dateCreation.toDate():null;
     const dateStr=date?date.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
-    const nomComplet=`${c.client?.prenom||''} ${c.client?.nom||''}`.trim()||'—';
-    const livrLabel=c.livraison?.mode==='retrait'?'Retrait sur place':`${c.livraison?.mode||'—'} — ${c.livraison?.ville||''}`;
+    const nomComplet=echapperHTML(`${c.client?.prenom||''} ${c.client?.nom||''}`.trim()||'—');
+    const livrLabel=echapperHTML(c.livraison?.mode==='retrait'?'Retrait sur place':`${c.livraison?.mode||'—'} — ${c.livraison?.ville||''}`);
     const statutTxt=STATUT_LABEL[c.statut]||c.statut||'—';
     const idSafe=String(c.id).replace(/'/g,"\\'");
     return `<tr>
       <td>${dateStr}</td>
       <td>${nomComplet}</td>
-      <td>${c.client?.phone||'—'}</td>
+      <td>${echapperHTML(c.client?.phone||'—')}</td>
       <td>${livrLabel}</td>
       <td>${fPrix(c.montant||0)}</td>
       <td>${statutTxt}</td>
@@ -1894,7 +1933,7 @@ const LEGAL_CONTENU = {
     html:`<p><strong>1. Produits</strong><br/>Les packs et produits proposés sont décrits aussi fidèlement que possible. Les photos et emojis illustratifs peuvent différer légèrement du produit livré.</p>
       <p style="margin-top:12px"><strong>2. Prix</strong><br/>Les prix sont indiqués en Francs CFA (FCFA), toutes taxes comprises. Les frais de livraison sont précisés avant la validation de la commande.</p>
       <p style="margin-top:12px"><strong>3. Commande & paiement</strong><br/>Le paiement s'effectue en ligne par Mobile Money (MTN, Moov, Celtiis) ou carte bancaire via la plateforme sécurisée FedaPay. La commande est confirmée après validation du paiement.</p>
-      <p style="margin-top:12px"><strong>4. Livraison</strong><br/>Livraison sous 24 à 48h à Cotonou et Calavi. Le retrait sur place est possible sans frais de livraison.</p>
+      <p style="margin-top:12px"><strong>4. Livraison</strong><br/>Livraison sous 24 à 48h à Cotonou et Calavi. Le retrait sur place est possible sans frais de livraison, à l'adresse suivante : Abomey-Calavi, en face de l'Église Sainte Joséphine Bakhita.</p>
       <p style="margin-top:12px"><strong>5. Réclamations</strong><br/>Pour toute question ou réclamation sur une commande, contactez-nous par téléphone ou WhatsApp au +229 01 94 17 36 08, ou par email à bssdsociete@gmail.com.</p>`
   },
   confidentialite:{
